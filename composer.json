@@ -1,0 +1,15 @@
+{
+    "name": "champoyradoo/katcher",
+    "description": "Video downloader for katch.me",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Champ Polestico",
+            "email": "champoyradoo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "league/route": "^1.2"
+    }
+}
