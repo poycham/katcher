@@ -1,4 +1,12 @@
+Options -MultiViews
+
 RewriteEngine On
+
+RewriteBase /katcher/
+
+# Redirect Trailing Slashes...
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ $1 [L,R]
 
 # Make index.php handle all requests
 RewriteCond %{REQUEST_FILENAME} !-d
