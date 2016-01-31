@@ -11,5 +11,10 @@
     "minimum-stability": "dev",
     "require": {
         "league/route": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Katcher\\": "src/"
+        }
     }
 }

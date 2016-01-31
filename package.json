@@ -1,0 +1,13 @@
+{
+  "name": "katcher",
+  "version": "1.0.0",
+  "description": "Downloader for katch.me",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://champoyradoo@bitbucket.org/champoyradoo/katcher.git"
+  },
+  "author": "Leoncio Cesar Polestico",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/champoyradoo/katcher#readme"
+}

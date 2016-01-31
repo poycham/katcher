@@ -6,11 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 $router = new RouteCollection;
 
-$router->addRoute('GET', '/test', function (Request $request, Response $response) {
-    echo 'haha';
-
-    return $response;
-});
+$router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
 
 
 $dispatcher = $router->getDispatcher();
