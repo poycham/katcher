@@ -8,9 +8,9 @@
             "email": "champoyradoo@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "league/route": "^1.2"
+        "league/route": "^1.2",
+        "league/plates": "^3.1"
     },
     "autoload": {
         "psr-4": {

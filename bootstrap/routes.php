@@ -2,9 +2,8 @@
 
 use League\Route\RouteCollection;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-$router = new RouteCollection;
+$router = new RouteCollection($container);
 
 $router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
 
