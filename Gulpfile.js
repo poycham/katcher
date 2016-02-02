@@ -1,15 +1,26 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
+var katcherNode = {
+    gulp: require('gulp'),
+    sass: require('gulp-sass'),
+    sourcemaps: require('gulp-sourcemaps')
+};
 
-var input = './resources/sass/**/*.scss';
-var output = './public/css';
+var katcherSass = {
+    input: './resources/sass/style.scss',
+    output: './public/css',
+    sourcemapPath: 'maps',
+    options: {
+        errLogToConsole: true,
+        outputStyle: 'expanded'
+    }
+};
 
-gulp.task('sass', function () {
-    return gulp
-        // Find all `.scss` files from the `stylesheets/` folder
-        .src(input)
-        // Run Sass on those files
-        .pipe(sass())
-        // Write the resulting CSS in the output folder
-        .pipe(gulp.dest(output));
-});
+(function (katcherNode, katcherSass) {
+    katcherNode.gulp.task('sass', function () {
+        return katcherNode.gulp
+            .src(katcherSass.input)
+            .pipe(katcherNode.sourcemaps.init())
+            .pipe(katcherNode.sass(katcherSass.options)).on('error', katcherNode.sass.logError)
+            .pipe(katcherNode.sourcemaps.write(katcherSass.sourcemapPath))
+            .pipe(katcherNode.gulp.dest(katcherSass.output));
+    });
+})(katcherNode, katcherSass);

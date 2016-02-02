@@ -1,0 +1,1 @@
+{"version":3,"file":"style.css","sources":["style.scss"],"sourcesContent":["$test: #fff;\r\n\r\nbody {\r\n  background: $test;\r\n}"],"mappings":"AAEA,IAAI,CAAC;EACH,UAAU,EAHL,IAAI;CAIV","names":[],"sourceRoot":"/source/"}

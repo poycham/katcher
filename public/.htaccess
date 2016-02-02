@@ -1,7 +1,6 @@
 Options -MultiViews
 
 RewriteEngine On
-
 RewriteBase /katcher/
 
 # Redirect Trailing Slashes...
