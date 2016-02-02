@@ -11,7 +11,10 @@ var katcherSass = {
     sourcemapPath: 'maps',
     options: {
         errLogToConsole: true,
-        outputStyle: 'expanded'
+        outputStyle: 'expanded',
+        includePaths: [
+            './node_modules/bootstrap-sass/assets/stylesheets'
+        ]
     }
 };
 
