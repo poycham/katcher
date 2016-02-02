@@ -1,11 +1,1 @@
-body {
-  background: #fff;
-}
-
-.some {
-  background: #000;
-  -webkit-transition: background-color 0.5s ease;
-  transition: background-color 0.5s ease;
-}
-
-/*# sourceMappingURL=maps/style.css.map */
+body{background:#fff}.some{background:#000;-webkit-transition:background-color 0.5s ease;transition:background-color 0.5s ease}a{color:yellow}b{color:green}p{color:pink}

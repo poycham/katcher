@@ -25,4 +25,22 @@ var katcherSass = {
             .pipe(katcherNode.sourcemaps.write(katcherSass.sourcemapPath))
             .pipe(katcherNode.gulp.dest(katcherSass.output));
     });
+
+    katcherNode.gulp.task('watch', function() {
+        return katcherNode.gulp
+            .watch(katcherSass.input, ['sass'])
+            .on('change', function(event) {
+                console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+            });
+    });
+
+    katcherNode.gulp.task('default', ['sass', 'watch']);
+
+    katcherNode.gulp.task('prod', function () {
+        return katcherNode.gulp
+            .src(katcherSass.input)
+            .pipe(katcherNode.sass({ outputStyle: 'compressed' }))
+            .pipe(katcherNode.autoprefixer())
+            .pipe(katcherNode.gulp.dest(katcherSass.output));
+    });
 })(katcherNode, katcherSass);
