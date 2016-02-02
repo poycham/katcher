@@ -1,1 +1,1 @@
-{"version":3,"file":"style.css","sources":["style.scss"],"sourcesContent":["$test: #fff;\r\n\r\nbody {\r\n  background: $test;\r\n}"],"mappings":"AAEA,IAAI,CAAC;EACH,UAAU,EAHL,IAAI;CAIV","names":[],"sourceRoot":"/source/"}
+{"version":3,"sources":["style.scss"],"names":[],"mappings":"AAEA;EACE,iBAHS;CAIV;;AAED;EACE,iBAAiB;EACjB,+CAAuC;EAAvC,uCAAuC;CACxC","file":"style.css","sourcesContent":["$test: #fff;\r\n\r\nbody {\r\n  background: $test;\r\n}\r\n\r\n.some {\r\n  background: #000;\r\n  transition: background-color 0.5s ease;\r\n}"],"sourceRoot":"/source/"}

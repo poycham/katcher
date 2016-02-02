@@ -2,4 +2,10 @@ body {
   background: #fff;
 }
 
+.some {
+  background: #000;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+}
+
 /*# sourceMappingURL=maps/style.css.map */
