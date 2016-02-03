@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-5">
-        <form>
+        <form action="" method="POST">
             <div class="form-group">
                 <input type="url" class="form-control" placeholder="URL" required>
             </div>
