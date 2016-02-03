@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 $router = new RouteCollection($container);
 
 $router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
+$router->addRoute('GET', '/test', 'Katcher\Controllers\KatcherController::test');
 
 
 $dispatcher = $router->getDispatcher();

@@ -12,7 +12,14 @@ class KatcherController
 {
     public function index(Request $request, Response $response)
     {
-        $response->setContent(view()->render('template'));
+        $response->setContent(view()->render('index'));
+
+        return $response;
+    }
+
+    public function test(Request $request, Response $response)
+    {
+        $response->setContent(view()->render('index'));
 
         return $response;
     }
