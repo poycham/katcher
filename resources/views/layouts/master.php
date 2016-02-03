@@ -4,19 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
     <link rel="icon" href="favicon.ico">
 
     <title>Bootstrap 101 Template</title>
-    <!-- Bootstrap -->
-    <link href="<?= $this->asset('css/style.css') ?>" rel="stylesheet">
 
-    <style>
-        body {
-            padding-top: 50px;
-        }
-    </style>
+    <!-- [styles] -->
+    <link href="<?= $this->asset('css/style.css') ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,16 +32,11 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Bootstrap starter template</h1>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
-    </div>
+<div class="container container-content">
+    <?= $this->section('content'); ?>
 </div><!-- /.container -->
 
-<!-- scripts -->
+<!-- [scripts] -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
 <script src="<?= $this->asset('js/vendor/bootstrap.min.js') ?>"></script>

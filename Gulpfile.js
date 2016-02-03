@@ -6,6 +6,7 @@ var katcherNode = {
 };
 
 var katcherSass = {
+    files: './resources/sass/**/*.scss',
     input: './resources/sass/style.scss',
     output: './public/css',
     sourcemapPath: 'maps',
@@ -31,7 +32,7 @@ var katcherSass = {
 
     katcherNode.gulp.task('watch', function() {
         return katcherNode.gulp
-            .watch(katcherSass.input, ['sass'])
+            .watch(katcherSass.files, ['sass'])
             .on('change', function(event) {
                 console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
             });

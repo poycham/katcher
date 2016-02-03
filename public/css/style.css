@@ -5950,4 +5950,12 @@ button.close {
   }
 }
 
+body {
+  padding-top: 50px;
+}
+
+.container-content {
+  padding-top: 20px;
+}
+
 /*# sourceMappingURL=maps/style.css.map */
