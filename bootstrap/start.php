@@ -15,7 +15,7 @@ $templates->loadExtension(
     new \League\Plates\Extension\Asset("{$basePath}/public", false)
 );
 
-$container->add('templates', $templates);
+$container->add('templates', $templates, true);
 
 /* register local filesystem */
 $container->add('filesystem', function() use ($basePath) {
@@ -33,7 +33,9 @@ $container->add('filesystem', function() use ($basePath) {
     return new \League\Flysystem\Filesystem($adapter, [
         'visibility' => \League\Flysystem\AdapterInterface::VISIBILITY_PRIVATE
     ]);
-});
+}, true);
+
+$container->add('guzzle', 'GuzzleHttp\Client', true);
 
 
 require __DIR__ . '/helpers.php';

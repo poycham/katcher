@@ -49,7 +49,18 @@ class KatcherUrl
      */
     public function fileURL($filePart)
     {
-        return $this->base . str_replace('%i', $filePart, $this->format);
+        return $this->base . $this->fileName($filePart);
+    }
+
+    /**
+     * Get file name
+     *
+     * @param $filePart
+     * @return string
+     */
+    public function fileName($filePart)
+    {
+        return str_replace('%i', $filePart, $this->format);
     }
 
     /**

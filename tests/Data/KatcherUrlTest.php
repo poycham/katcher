@@ -39,4 +39,12 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
             $this->katcherURL->fileURL(27)
         );
     }
+
+    public function testFileName()
+    {
+        $this->assertEquals(
+            'media-uwmn73350_23.ts',
+            $this->katcherURL->fileName(23)
+        );
+    }
 }

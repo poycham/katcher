@@ -12,7 +12,8 @@
         "league/route": "^1.2",
         "league/plates": "^3.1",
         "league/uri": "^4.0",
-        "league/flysystem": "^1.0"
+        "league/flysystem": "^1.0",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "autoload": {
         "psr-4": {
