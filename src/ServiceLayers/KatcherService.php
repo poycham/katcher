@@ -67,6 +67,8 @@ class KatcherService
                     $retries++;
                     exit;
                 }
+
+                break;
             }
 
             /* save file */
