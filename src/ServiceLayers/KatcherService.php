@@ -7,6 +7,7 @@ namespace Katcher\ServiceLayers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
 use League\Flysystem\Adapter\Local;
 
@@ -34,7 +35,8 @@ class KatcherService
         /* create meta.json */
         $meta = [
             'status' => 'downloading',
-            'missing_files' => []
+            'missing_files' => [],
+            'nonexistent_files' => []
         ];
 
         $filesystem->write("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
@@ -46,16 +48,25 @@ class KatcherService
         $localAdapter = $filesystem->getAdapter();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
-            try {
-                $response =  $guzzle->request('GET', $katcherURL->fileURL($i), [
-                    'verify' => false,
-                    'timeout' => 3.14
-                ]);
-            } catch (ClientException $e) {
-                /* log missing file if not found */
-                $meta['missing_files'][] = (int) $i;
+            $retries = 0;
 
-                continue;
+            while ($retries != KatcherDownload::RETRY_LIMIT) {
+                try {
+                    $response =  $guzzle->request('GET', $katcherURL->fileURL($i), [
+                        'verify' => false,
+                        'timeout' => 3.14
+                    ]);
+                } catch (ClientException $e) {
+                    /* log missing file if not found */
+                    $meta['nonexistent_files'][] = (int) $i;
+
+                    /* download next file */
+                    continue 2;
+                } catch (RequestException $e) {
+                    echo 'There is no connection';
+                    $retries++;
+                    exit;
+                }
             }
 
             /* save file */
