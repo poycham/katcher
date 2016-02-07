@@ -39,8 +39,8 @@ class KatcherService
 
         /* download files */
         /** @var $guzzle Client */
-        $guzzle = $container->get('guzzle');
         /** @var $localAdapter Local */
+        $guzzle = $container->get('guzzle');
         $localAdapter = $filesystem->getAdapter();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {

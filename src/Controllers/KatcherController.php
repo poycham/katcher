@@ -30,6 +30,8 @@ class KatcherController
 
     public function downloadFiles(Request $request, Response $response)
     {
+        set_time_limit(0);
+
         $this->service->downloadFiles($request->request->all());
 
         return $response;
