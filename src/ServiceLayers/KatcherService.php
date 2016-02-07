@@ -5,6 +5,8 @@ namespace Katcher\ServiceLayers;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use Katcher\Data\KatcherUrl;
 use League\Flysystem\Adapter\Local;
 
@@ -44,14 +46,26 @@ class KatcherService
         $localAdapter = $filesystem->getAdapter();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
-            $fileName = $katcherURL->fileName($i);
-            $filePath = $localAdapter->applyPathPrefix("{$filesDir}/{$fileName}");
+            try {
+                $response =  $guzzle->request('GET', $katcherURL->fileURL($i), [
+                    'verify' => false,
+                    'timeout' => 3.14
+                ]);
+            } catch (ClientException $e) {
+                /* log missing file if not found */
+                $meta['missing_files'][] = (int) $i;
 
-            $fileContent =  $guzzle->request('GET', $katcherURL->fileURL($i), [
-                'verify' => false,
-                'sink' => $filePath,
-                'timeout' => 3.14
-            ]);
+                continue;
+            }
+
+            /* save file */
+            $filesystem->write(
+                "{$filesDir}/{$katcherURL->fileName($i)}",
+                $response->getBody()->getContents()
+            );
         }
+
+        /* update log */
+        $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
     }
 }
