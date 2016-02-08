@@ -6,6 +6,7 @@ namespace Katcher\Controllers;
 
 use Katcher\ServiceLayers\KatcherService;
 use League\Plates\Engine;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,9 +33,9 @@ class KatcherController
     {
         set_time_limit(0);
 
-        $this->service->downloadFiles($request->request->all());
+        $format = $this->service->downloadFiles($request->request->all());
 
-        return $response;
+        return new RedirectResponse('http://localhost/katcher/combiner/' . $format);
     }
 
     public function combiner(Request $request, Response $response, array $args)

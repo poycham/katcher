@@ -26,7 +26,7 @@ class KatcherService
         /** @var $filesystem \League\Flysystem\Filesystem */
         $filesystem = $container->get('filesystem');
 
-        $dir = str_replace('.ts', '', $katcherURL->format());
+        $dir = $katcherURL->folder();
         /* delete duplicate directory */
         if ($filesystem->has($dir)) {
             $filesystem->deleteDir($dir);
@@ -102,6 +102,6 @@ class KatcherService
 
         $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
 
-        return $katcherURL->format();
+        return $dir;
     }
 }

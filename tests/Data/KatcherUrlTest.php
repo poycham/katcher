@@ -47,4 +47,12 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
             $this->katcherURL->fileName(23)
         );
     }
+
+    public function testFolder()
+    {
+        $this->assertEquals(
+            '6a155ef8-6571-38a6-8c8c-d83080d2428e',
+            $this->katcherURL->folder()
+        );
+    }
 }

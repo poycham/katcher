@@ -16,6 +16,11 @@ class KatcherUrl
      */
     protected $format;
 
+    /**
+     * @var string
+     */
+    protected $folder;
+
     public function __construct($rawURL)
     {
         $this->setProperties($rawURL);
@@ -39,6 +44,11 @@ class KatcherUrl
     public function format()
     {
         return $this->format;
+    }
+
+    public function folder()
+    {
+        return $this->folder;
     }
 
     /**
@@ -80,5 +90,8 @@ class KatcherUrl
 
         /* set format */
         $this->format = preg_replace('/[0-9]+\.ts$/', '%i.ts', $file);
+
+        /* set folder */
+        $this->folder = preg_replace(['/^http(s)?:\/\/[^\/]+\//', '/\/$/'], '', $this->base);
     }
 }
