@@ -35,17 +35,16 @@ class KatcherService
         /* create meta.json */
         $meta = [
             'status' => 'downloading',
-            'missing_files' => [],
-            'nonexistent_files' => []
+            'missingFiles' => [],
+            'nonexistentFiles' => [],
+            'downloadRetries' => 0
         ];
 
         $filesystem->write("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
 
         /* download files */
         /** @var $guzzle Client */
-        /** @var $localAdapter Local */
         $guzzle = $container->get('guzzle');
-        $localAdapter = $filesystem->getAdapter();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
             $retries = 0;
@@ -57,28 +56,44 @@ class KatcherService
                         'timeout' => KatcherDownload::CONNECTION_TIMEOUT
                     ]);
                 } catch (ClientException $e) {
-                    /* log missing file if not found */
-                    $meta['nonexistent_files'][] = (int) $i;
+                    /* log nonexistent file if not found */
+                    $meta['nonexistentFiles'][] = (int) $i;
 
                     /* download next file */
                     continue 2;
                 } catch (RequestException $e) {
-                    echo 'There is no connection';
                     $retries++;
-                    exit;
+
+                    /* log retries */
+                    $meta['downloadRetries']++;
+
+                    /* log missing file */
+                    if ($retries == KatcherDownload::RETRY_LIMIT) {
+                        $meta['missingFiles'][] = (int) $i;
+
+                        /* download next file */
+                        continue;
+                    }
+
+                    /* wait before retrying */
+                    sleep(KatcherDownload::RETRY_WAIT_SECS);
+                    continue;
                 }
 
+                /* save file */
+                $filesystem->write(
+                    "{$filesDir}/{$katcherURL->fileName($i)}",
+                    $response->getBody()->getContents()
+                );
+
+                /* download next file */
                 break;
             }
-
-            /* save file */
-            $filesystem->write(
-                "{$filesDir}/{$katcherURL->fileName($i)}",
-                $response->getBody()->getContents()
-            );
         }
 
         /* update log */
+        $meta['status'] = 'downloaded';
+
         $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
     }
 }
