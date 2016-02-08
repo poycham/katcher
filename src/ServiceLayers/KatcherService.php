@@ -13,7 +13,13 @@ use League\Flysystem\Adapter\Local;
 
 class KatcherService
 {
-    public function downloadFiles($data)
+    /**
+     * Download files
+     *
+     * @param $data
+     * @return string
+     */
+    public function downloadFiles(array $data)
     {
         $katcherURL = new KatcherUrl($data['url']);
         $container = container();
@@ -95,5 +101,7 @@ class KatcherService
         $meta['status'] = 'downloaded';
 
         $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
+
+        return $katcherURL->format();
     }
 }

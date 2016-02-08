@@ -37,6 +37,13 @@ class KatcherController
         return $response;
     }
 
+    public function combiner(Request $request, Response $response, array $args)
+    {
+        var_dump($args);
+
+        return $response;
+    }
+
     public function test(Request $request, Response $response)
     {
         $response->setContent(view()->render('index'));
