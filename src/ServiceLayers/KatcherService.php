@@ -54,7 +54,7 @@ class KatcherService
                 try {
                     $response =  $guzzle->request('GET', $katcherURL->fileURL($i), [
                         'verify' => false,
-                        'timeout' => 3.14
+                        'timeout' => KatcherDownload::CONNECTION_TIMEOUT
                     ]);
                 } catch (ClientException $e) {
                     /* log missing file if not found */
