@@ -11,7 +11,7 @@ $basePath = realpath(__DIR__) . '/../';
 $container = new \League\Container\Container();
 
 /* register templates */
-$templates = new \League\Plates\Engine("{$basePath}/resources/views");
+$templates = new \League\Plates\Engine("{$basePath}/resources/views", 'tpl.php');
 $templates->loadExtension(
     new \League\Plates\Extension\Asset("{$basePath}/public", false)
 );
