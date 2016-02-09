@@ -47,7 +47,7 @@ class KatcherController
 
     public function combiner(Request $request, Response $response, array $args)
     {
-        var_dump($args);
+        $response->setContent(view()->render('combiner'));
 
         return $response;
     }
