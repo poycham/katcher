@@ -9,13 +9,12 @@ $router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
 
 $router->addRoute('POST', '/', 'Katcher\Controllers\KatcherController::downloadFiles');
 
-$router->addRoute('GET', '/combiner/{format}', 'Katcher\Controllers\KatcherController::combiner');
+$router->addRoute('GET', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combiner');
 
 $router->addRoute('GET', '/test/new', 'Katcher\Controllers\KatcherController::test');
 
-
 $dispatcher = $router->getDispatcher();
-$request = Request::createFromGlobals();
+$request = container()->get('request');
 
 $requestURI = preg_replace('/^\/katcher/', '', $request->getPathInfo());
 $response = $dispatcher->dispatch($request->getMethod(), $requestURI);

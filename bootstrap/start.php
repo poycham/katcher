@@ -1,6 +1,7 @@
 <?php
 
 use League\Flysystem\Adapter\Local;
+use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -37,6 +38,24 @@ $container->add('filesystem', function() use ($basePath) {
 
 $container->add('guzzle', 'GuzzleHttp\Client', true);
 
+/* register request */
+$container->singleton('request', function() {
+    return Request::createFromGlobals();
+});
+
+/* register url */
+$container->singleton('url_generator', function() use ($container) {
+    /* get base url */
+    /* @var Request $request */
+    $request = $container->get('request');
+    $baseURL = preg_replace(
+        '/\/(index.php)?$/',
+        '',
+        $request->server->get('REDIRECT_URL')
+    );
+
+    return new \Katcher\Components\UrlGenerator($baseURL);
+});
 
 require __DIR__ . '/helpers.php';
 require __DIR__ . '/routes.php';

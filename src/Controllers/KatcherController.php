@@ -29,13 +29,20 @@ class KatcherController
         return $response;
     }
 
+    /**
+     * Handle post request to download files
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return RedirectResponse
+     */
     public function downloadFiles(Request $request, Response $response)
     {
         set_time_limit(0);
 
-        $format = $this->service->downloadFiles($request->request->all());
+        $folder = $this->service->downloadFiles($request->request->all());
 
-        return new RedirectResponse('http://localhost/katcher/combiner/' . $format);
+        return new RedirectResponse(url("combiner/{$folder}"));
     }
 
     public function combiner(Request $request, Response $response, array $args)
