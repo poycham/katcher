@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="./">Katcher</a>
+            <a class="navbar-brand" href="<?= baseURL(); ?>">Katcher</a>
         </div>
 
         <div id="navbar" class="collapse navbar-collapse">

@@ -37,3 +37,16 @@ function url($uri)
 
     return $urlGenerator->url($uri);
 }
+
+/**
+ * Get absolute base url
+ *
+ * @return string
+ */
+function baseURL()
+{
+    /** @var \Katcher\Components\UrlGenerator $urlGenerator */
+    $urlGenerator = container()->get('url_generator');
+
+    return $urlGenerator->baseURL();
+}
