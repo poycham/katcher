@@ -129,6 +129,12 @@ class KatcherService
             return '<a href="'. $katcherURL->fileURL($filePart) .'">'. $filePart .'</a>';
         };
 
+        /* set count variables */
+        /*$nonExistentFilesCount = count($meta['nonExistentFiles']);
+        $missingFilesCount = count($meta['missingFilesCount']);
+        $hasMissingFiles = (count($meta['nonExistentFiles']) > 0);
+        $isAllDownloaded = ($nonExistentFilesCount == 0 && $missingFilesCount == 0);*/
+
         return array_merge($meta, compact('getDownloadLink'));
     }
 }
