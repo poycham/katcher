@@ -5,7 +5,7 @@
         <form action="" method="POST">
             <?php if (count($nonexistentFiles) > 0) : ?>
                 <div class="alert alert-warning">
-                    Some files are non-existent.
+                    These file(s) were not found: <?= implode(', ', array_map($getDownloadLink, $nonexistentFiles)) ?>
                 </div>
             <?php endif; ?>
 

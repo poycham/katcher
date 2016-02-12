@@ -122,17 +122,13 @@ class KatcherService
             true
         );
 
-        /*$katcherURL = new KatcherUrl($meta['url']);
+        /* set getDownloadLink function */
+        $katcherURL = new KatcherUrl($meta['url']);
 
-        $linkSetter = function($filePart) use ($katcherURL) {
-            return $katcherURL->fileURL($filePart);
+        $getDownloadLink = function($filePart) use ($katcherURL) {
+            return '<a href="'. $katcherURL->fileURL($filePart) .'">'. $filePart .'</a>';
         };
 
-        var_dump($linkSetter(25));
-        exit;*/
-
-        return array_merge($meta, [
-
-        ]);
+        return array_merge($meta, compact('getDownloadLink'));
     }
 }
