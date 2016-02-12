@@ -41,6 +41,7 @@ class KatcherService
         /* create meta.json */
         $meta = [
             'status' => 'downloading',
+            'url' => $katcherURL->fileURL('%i'),
             'missingFiles' => [],
             'nonexistentFiles' => [],
             'downloadRetries' => 0
@@ -103,5 +104,35 @@ class KatcherService
         $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
 
         return $dir;
+    }
+
+    /**
+     * View data for combiner page
+     *
+     * @param $folder
+     * @return array
+     */
+    public function combinerViewData($folder)
+    {
+        /** @var $filesystem \League\Flysystem\Filesystem */
+        $filesystem = container()->get('filesystem');
+
+        $meta = json_decode(
+            $filesystem->read("{$folder}/meta.json"),
+            true
+        );
+
+        /*$katcherURL = new KatcherUrl($meta['url']);
+
+        $linkSetter = function($filePart) use ($katcherURL) {
+            return $katcherURL->fileURL($filePart);
+        };
+
+        var_dump($linkSetter(25));
+        exit;*/
+
+        return array_merge($meta, [
+
+        ]);
     }
 }

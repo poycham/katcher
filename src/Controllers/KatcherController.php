@@ -47,7 +47,11 @@ class KatcherController
 
     public function combiner(Request $request, Response $response, array $args)
     {
-        $response->setContent(view()->render('combiner'));
+        $viewData = $this->service->combinerViewData($args['folder']);
+
+        $response->setContent(
+            view()->render('combiner', $viewData)
+        );
 
         return $response;
     }
