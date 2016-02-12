@@ -45,6 +45,14 @@ class KatcherController
         return new RedirectResponse(url("combiner/{$folder}"));
     }
 
+    /**
+     * Show combiner page
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function combiner(Request $request, Response $response, array $args)
     {
         $viewData = $this->service->combinerViewData($args['folder']);
@@ -52,6 +60,13 @@ class KatcherController
         $response->setContent(
             view()->render('combiner', $viewData)
         );
+
+        return $response;
+    }
+
+    public function combineFiles(Request $request, Response $response, array $args)
+    {
+        var_dump($args);
 
         return $response;
     }

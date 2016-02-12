@@ -11,6 +11,8 @@ $router->addRoute('POST', '/', 'Katcher\Controllers\KatcherController::downloadF
 
 $router->addRoute('GET', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combiner');
 
+$router->addRoute('POST', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combineFiles');
+
 $router->addRoute('GET', '/test/new', 'Katcher\Controllers\KatcherController::test');
 
 $dispatcher = $router->getDispatcher();
