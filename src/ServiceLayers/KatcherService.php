@@ -114,6 +114,9 @@ class KatcherService
      */
     public function combinerViewData($folder)
     {
+        /* conditional view data */
+        $condViewData = [];
+
         /** @var $filesystem \League\Flysystem\Filesystem */
         $filesystem = container()->get('filesystem');
 
@@ -129,16 +132,29 @@ class KatcherService
             return '<a href="'. $katcherURL->fileURL($filePart) .'">'. $filePart .'</a>';
         };
 
-        /* set count booleans */
+        /* set conditional view data */
         $hasMissingFiles = (count($meta['missingFiles']) > 0);
         $hasNonexistentFiles = (count($meta['nonexistentFiles']) > 0);
         $isAllDownloaded = (! $hasNonexistentFiles && ! $hasMissingFiles);
 
-        return array_merge($meta, compact(
+        if (! $isAllDownloaded) {
+            if ($hasMissingFiles) {
+                $condViewData['missingFiles'] = $meta['missingFiles'];
+            }
+
+            if ($hasNonexistentFiles) {
+                $condViewData['nonexistentFiles'] = $meta['nonexistentFiles'];
+            }
+        }
+
+        /* set view data */
+        $viewData = array_merge(compact(
             'getDownloadLink',
             'hasMissingFiles',
             'hasNonexistentFiles',
             'isAllDownloaded'
-        ));
+        ), $condViewData);
+
+        return $viewData;
     }
 }
