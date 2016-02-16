@@ -10,6 +10,11 @@ $basePath = realpath(__DIR__) . '/../';
 
 $container = new \League\Container\Container();
 
+/* register path */
+$container->singleton('path_generator', function() use ($basePath) {
+    return new \Katcher\Components\PathGenerator($basePath);
+});
+
 /* register templates */
 $templates = new \League\Plates\Engine("{$basePath}/resources/views", 'tpl.php');
 $templates->loadExtension(

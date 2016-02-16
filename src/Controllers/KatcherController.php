@@ -66,7 +66,7 @@ class KatcherController
 
     public function combineFiles(Request $request, Response $response, array $args)
     {
-        var_dump($args);
+        $this->service->combineFiles($args['folder']);
 
         return $response;
     }

@@ -7,6 +7,7 @@ namespace Katcher\ServiceLayers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
 use League\Flysystem\Adapter\Local;
@@ -156,5 +157,42 @@ class KatcherService
         ), $condViewData);
 
         return $viewData;
+    }
+
+    /**
+     * Combine files
+     *
+     * @param $folder
+     */
+    public function combineFiles($folder)
+    {
+        $downloadStorage = new DownloadStorage($folder, $this->fileSystem());
+        $meta = $downloadStorage->meta();
+        $katcherURL = new KatcherUrl($meta['url']);
+
+        /* create all file */
+        $allFileStream = fopen(
+            $downloadStorage->path($katcherURL->fileName('all')),
+            'w+'
+        );
+
+        /* write to all file stream */
+        $files = $downloadStorage->getFiles();
+
+        foreach ($files as $data) {
+            fwrite($allFileStream, $downloadStorage->readFilePart($data['basename']));
+        }
+
+        fclose($allFileStream);
+    }
+
+    /**
+     * Get file system
+     *
+     * @return \League\Flysystem\Filesystem
+     */
+    private function fileSystem()
+    {
+        return container()->get('filesystem');
     }
 }
