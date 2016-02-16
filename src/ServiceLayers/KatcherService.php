@@ -184,6 +184,8 @@ class KatcherService
         }
 
         fclose($allFileStream);
+
+        /* update logs */
     }
 
     /**
