@@ -7,10 +7,10 @@ namespace Katcher\ServiceLayers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
-use League\Flysystem\Adapter\Local;
 
 class KatcherService
 {
@@ -167,8 +167,8 @@ class KatcherService
     public function combineFiles($folder)
     {
         $downloadStorage = new DownloadStorage($folder, $this->fileSystem());
-        $meta = $downloadStorage->meta();
-        $katcherURL = new KatcherUrl($meta['url']);
+        $metaLog = DownloadMetaLog::read($downloadStorage);
+        $katcherURL = new KatcherUrl($metaLog->get('url'));
 
         /* create all file */
         $allFileStream = fopen(
@@ -186,6 +186,7 @@ class KatcherService
         fclose($allFileStream);
 
         /* update logs */
+        $metaLog->set('status', 'combined')->save();
     }
 
     /**

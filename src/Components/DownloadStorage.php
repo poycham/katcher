@@ -73,7 +73,28 @@ class DownloadStorage
      */
     public function getFiles()
     {
-        return $this->filesystem->listContents($this->relativePath('files'));
+        $files = $this->filesystem->listContents($this->relativePath('files'));
+
+        /* sort files by extension number */
+        $getNum = function($fileName) {
+            preg_match('/([\d]+)\.ts$/', $fileName, $matches);
+
+            return (int) $matches[1];
+        };
+
+        $sortByExtensionNumber = function($a, $b) use ($getNum) {
+            $numA = $getNum($a['basename']);
+            $numB = $getNum($b['basename']);
+
+            if ($numA == $numB) {
+                return 0;
+            }
+            return ($numA < $numB) ? -1 : 1;
+        };
+
+        usort($files, $sortByExtensionNumber);
+
+        return $files;
     }
 
     /**
