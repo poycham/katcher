@@ -11,6 +11,7 @@ use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
+use pastuhov\Command\Command;
 
 class KatcherService
 {
@@ -169,24 +170,19 @@ class KatcherService
         $downloadStorage = new DownloadStorage($folder, $this->fileSystem());
         $metaLog = DownloadMetaLog::read($downloadStorage);
         $katcherURL = new KatcherUrl($metaLog->get('url'));
+        $allFilePath = $downloadStorage->path("{$folder}.ts");
 
-        /* create all file */
-        $allFileStream = fopen(
-            $downloadStorage->path($katcherURL->fileName('all')),
-            'w+'
+        $this->combine(
+            $allFilePath,
+            $downloadStorage,
+            $metaLog
         );
 
-        /* write to all file stream */
-        $files = $downloadStorage->getFiles();
-
-        foreach ($files as $data) {
-            fwrite($allFileStream, $downloadStorage->readFilePart($data['basename']));
-        }
-
-        fclose($allFileStream);
+        $this->convertFile();
 
         /* update logs */
-        $metaLog->set('status', 'combined')->save();
+        /*$this->convertFile($allFilePath, $folder, $katcherURL->fileName('all'));*/
+        /**/
     }
 
     /**
@@ -197,5 +193,54 @@ class KatcherService
     private function fileSystem()
     {
         return container()->get('filesystem');
+    }
+
+    /**
+     * Combine files
+     *
+     * @param string $allFilePath
+     * @param DownloadStorage $downloadStorage
+     * @param DownloadMetaLog $metaLog
+     */
+    private function combine(
+        $allFilePath,
+        DownloadStorage $downloadStorage,
+        DownloadMetaLog $metaLog
+    ) {
+        /* create all file */
+        $allFileStream = fopen($allFilePath, 'w');
+
+        /* write to all file stream */
+        foreach ($downloadStorage->getFiles() as $data) {
+            fwrite($allFileStream, $downloadStorage->readFilePart($data['basename']));
+        }
+
+        fclose($allFileStream);
+
+        /* log status change */
+        $metaLog->set('status', 'converting')->save();
+    }
+
+    /**
+     * @param string $allFilePath
+     */
+    private function convertFile($allFilePath, $folder, $fileName)
+    {
+        try {
+            $convertedFilePath = str_replace($fileName, "{$folder}.mp4", $allFilePath);
+
+            $output = Command::exec(
+                'ffmpeg -loglevel quiet -y -i {allFilePath} -bsf:a aac_adtstoasc -acodec copy -vcodec copy {convertedFilePath}',
+                [
+                    'allFilePath' => $allFilePath,
+                    'convertedFilePath' => $convertedFilePath
+                ]
+            );
+
+            var_dump($output);
+        } catch (\Exception $e) {
+            var_dump('error');
+            var_dump($e);
+        }
     }
 }
