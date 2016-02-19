@@ -163,26 +163,16 @@ class KatcherService
     /**
      * Combine files
      *
-     * @param $folder
+     * @param string $folder
      */
     public function combineFiles($folder)
     {
         $downloadStorage = new DownloadStorage($folder, $this->fileSystem());
         $metaLog = DownloadMetaLog::read($downloadStorage);
-        $katcherURL = new KatcherUrl($metaLog->get('url'));
         $allFilePath = $downloadStorage->path("{$folder}.ts");
 
-        $this->combine(
-            $allFilePath,
-            $downloadStorage,
-            $metaLog
-        );
-
-        $this->convertFile($allFilePath);
-
-        /* update logs */
-        /*$this->convertFile($allFilePath, $folder, $katcherURL->fileName('all'));*/
-        /**/
+        $this->combine($allFilePath, $downloadStorage, $metaLog);
+        $this->convertFile($allFilePath, $metaLog);
     }
 
     /**
@@ -225,20 +215,26 @@ class KatcherService
      * Convert file
      *
      * @param string $allFilePath
+     * @param DownloadMetaLog $metaLog
      */
-    private function convertFile($allFilePath)
+    private function convertFile($allFilePath, DownloadMetaLog $metaLog)
     {
         try {
             $convertedFilePath = preg_replace('/\.ts$/', '.mp4', $allFilePath);
 
-            $output = Command::exec(
+            Command::exec(
                 'ffmpeg -loglevel quiet -y -i {allFilePath} -bsf:a aac_adtstoasc -acodec copy -vcodec copy {convertedFilePath}',
                 [
                     'allFilePath' => $allFilePath,
                     'convertedFilePath' => $convertedFilePath
                 ]
             );
+
+            $metaLog->set('status', 'converted');
         } catch (\Exception $e) {
+            $metaLog->set('status', 'failed_conversion');
         }
+
+        $metaLog->save();
     }
 }

@@ -13,7 +13,7 @@ $router->addRoute('GET', '/combiner/{folder}', 'Katcher\Controllers\KatcherContr
 
 $router->addRoute('POST', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combineFiles');
 
-$router->addRoute('GET', '/test/new', 'Katcher\Controllers\KatcherController::test');
+$router->addRoute('GET', '/download/{folder}', 'Katcher\Controllers\KatcherController::download');
 
 $dispatcher = $router->getDispatcher();
 $request = container()->get('request');

@@ -64,16 +64,26 @@ class KatcherController
         return $response;
     }
 
+    /**
+     * Handle POST request to combine files
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return RedirectResponse
+     */
     public function combineFiles(Request $request, Response $response, array $args)
     {
         $this->service->combineFiles($args['folder']);
 
-        return $response;
+        return new RedirectResponse(url("download/{$args['folder']}"));
     }
 
-    public function test(Request $request, Response $response)
+    public function download(Request $request, Response $response, array $args)
     {
-        $response->setContent(view()->render('index'));
+        $response->setContent(
+            view()->render('download', $args)
+        );
 
         return $response;
     }
