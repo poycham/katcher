@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/master') ?>
+<?php $this->layout('layouts/master', ['title' => 'Katcher - Download .ts Videos']) ?>
 
 <div class="row">
     <div class="col-md-5">

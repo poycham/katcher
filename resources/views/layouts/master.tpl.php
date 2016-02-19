@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="favicon.ico">
 
-    <title>Bootstrap 101 Template</title>
+    <title><?= $title ?></title>
 
     <!-- [styles] -->
     <link href="<?= url($this->asset('css/style.css')) ?>" rel="stylesheet">

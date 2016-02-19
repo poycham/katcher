@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/master') ?>
+<?php $this->layout('layouts/master', ['title' => 'Katcher - Convert to .mp4']) ?>
 
 <div class="row">
     <div class="col-md-5">
