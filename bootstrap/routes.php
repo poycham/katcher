@@ -8,8 +8,8 @@ $router = new RouteCollection($container);
 $router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
 $router->addRoute('POST', '/', 'Katcher\Controllers\KatcherController::downloadFiles');
 
-$router->addRoute('GET', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combiner');
-$router->addRoute('POST', '/combiner/{folder}', 'Katcher\Controllers\KatcherController::combineFiles');
+$router->addRoute('GET', '/convert/{folder}', 'Katcher\Controllers\KatcherController::showConvert');
+$router->addRoute('POST', '/convert/{folder}', 'Katcher\Controllers\KatcherController::combineFiles');
 
 $router->addRoute('GET', '/download/{folder}', 'Katcher\Controllers\KatcherController::download');
 $router->addRoute('POST', '/download/{folder}', 'Katcher\Controllers\KatcherController::downloadFile');
