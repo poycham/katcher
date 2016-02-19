@@ -178,7 +178,7 @@ class KatcherService
             $metaLog
         );
 
-        $this->convertFile();
+        $this->convertFile($allFilePath);
 
         /* update logs */
         /*$this->convertFile($allFilePath, $folder, $katcherURL->fileName('all'));*/
@@ -222,12 +222,14 @@ class KatcherService
     }
 
     /**
+     * Convert file
+     *
      * @param string $allFilePath
      */
-    private function convertFile($allFilePath, $folder, $fileName)
+    private function convertFile($allFilePath)
     {
         try {
-            $convertedFilePath = str_replace($fileName, "{$folder}.mp4", $allFilePath);
+            $convertedFilePath = preg_replace('/\.ts$/', '.mp4', $allFilePath);
 
             $output = Command::exec(
                 'ffmpeg -loglevel quiet -y -i {allFilePath} -bsf:a aac_adtstoasc -acodec copy -vcodec copy {convertedFilePath}',
@@ -236,11 +238,7 @@ class KatcherService
                     'convertedFilePath' => $convertedFilePath
                 ]
             );
-
-            var_dump($output);
         } catch (\Exception $e) {
-            var_dump('error');
-            var_dump($e);
         }
     }
 }
