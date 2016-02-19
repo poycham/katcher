@@ -9,6 +9,7 @@ use League\Plates\Engine;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class KatcherController
 {
@@ -79,11 +80,45 @@ class KatcherController
         return new RedirectResponse(url("download/{$args['folder']}"));
     }
 
+    /**
+     * Show download page
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function download(Request $request, Response $response, array $args)
     {
         $response->setContent(
-            view()->render('download', $args)
+            view()->render('download')
         );
+
+        return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function downloadFile(Request $request, Response $response, array $args)
+    {
+        /* set download headers */
+        $fileName = "{$args['folder']}.mp4";
+        $contentDisposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $fileName
+        );
+
+        $response->headers->set('Content-Type', 'video/mp4');
+        $response->headers->set('Content-Disposition', $contentDisposition);
+
+        /* set download content */
+        $fileContent = $this->service->getDownloadFileContent($fileName);
+
+        $response->setContent($fileContent);
 
         return $response;
     }

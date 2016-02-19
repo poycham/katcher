@@ -16,6 +16,19 @@ use pastuhov\Command\Command;
 class KatcherService
 {
     /**
+     * @var \League\Container\Container
+     */
+    protected $container;
+
+    /**
+     * Create KatcherService
+     */
+    public function __construct()
+    {
+        $this->container = container();
+    }
+
+    /**
      * Download files
      *
      * @param $data
@@ -173,6 +186,45 @@ class KatcherService
 
         $this->combine($allFilePath, $downloadStorage, $metaLog);
         $this->convertFile($allFilePath, $metaLog);
+    }
+
+    /**
+     * Get download file path
+     *
+     * @param $folder
+     * @return string
+     */
+    public function getDownloadFilePath($folder)
+    {
+        $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
+
+        return $downloadStorage->path("{$folder}.mp4");
+    }
+
+    /**
+     * Get download file contents
+     *
+     * @param $fileName
+     * @return bool|false|string
+     */
+    public function getDownloadFileContent($fileName)
+    {
+        $downloadStorage = new DownloadStorage(
+            basename($fileName, '.mp4'),
+            $this->getFileSystem()
+        );
+
+        return $downloadStorage->read($fileName);
+    }
+
+    /**
+     * Get file system
+     *
+     * @return \League\Flysystem\Filesystem
+     */
+    private function getFileSystem()
+    {
+        return $this->container->get('filesystem');
     }
 
     /**
