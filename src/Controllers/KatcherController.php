@@ -66,16 +66,16 @@ class KatcherController
     }
 
     /**
-     * Handle POST request to combine files
+     * Handle POST request to convert .ts files to .mp4
      *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @return RedirectResponse
      */
-    public function combineFiles(Request $request, Response $response, array $args)
+    public function processConvert(Request $request, Response $response, array $args)
     {
-        $this->service->combineFiles($args['folder']);
+        $this->service->convertTsToMp4($args['folder']);
 
         return new RedirectResponse(url("download/{$args['folder']}"));
     }

@@ -174,18 +174,38 @@ class KatcherService
     }
 
     /**
-     * Combine files
+     * Convert .ts files to .mp4
      *
      * @param string $folder
      */
-    public function combineFiles($folder)
+    public function convertTsToMp4($folder)
     {
-        $downloadStorage = new DownloadStorage($folder, $this->fileSystem());
+        $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
         $metaLog = DownloadMetaLog::read($downloadStorage);
-        $allFilePath = $downloadStorage->path("{$folder}.ts");
 
-        $this->combine($allFilePath, $downloadStorage, $metaLog);
-        $this->convertFile($allFilePath, $metaLog);
+        /* combine ts files */
+        $combinedTsPath = $downloadStorage->path("{$folder}.ts");
+
+        $this->combineTsFiles($combinedTsPath, $downloadStorage, $metaLog);
+
+        /* convert combined ts file to mp4 */
+        try {
+            $convertedMp4Path = preg_replace('/\.ts$/', '.mp4', $combinedTsPath);
+
+            Command::exec(
+                'ffmpeg -loglevel quiet -y -i {combinedTsPath} -bsf:a aac_adtstoasc -acodec copy -vcodec copy {convertedMp4Path}',
+                [
+                    'combinedTsPath' => $combinedTsPath,
+                    'convertedMp4Path' => $convertedMp4Path
+                ]
+            );
+
+            $metaLog->set('status', 'converted');
+        } catch (\Exception $e) {
+            $metaLog->set('status', 'failed_conversion');
+        }
+
+        $metaLog->save();
     }
 
     /**
@@ -228,65 +248,28 @@ class KatcherService
     }
 
     /**
-     * Get file system
-     *
-     * @return \League\Flysystem\Filesystem
-     */
-    private function fileSystem()
-    {
-        return container()->get('filesystem');
-    }
-
-    /**
      * Combine files
      *
-     * @param string $allFilePath
+     * @param string $combinedTsPath
      * @param DownloadStorage $downloadStorage
      * @param DownloadMetaLog $metaLog
      */
-    private function combine(
-        $allFilePath,
+    private function combineTsFiles(
+        $combinedTsPath,
         DownloadStorage $downloadStorage,
         DownloadMetaLog $metaLog
     ) {
         /* create all file */
-        $allFileStream = fopen($allFilePath, 'w');
+        $combinedTsStream = fopen($combinedTsPath, 'w');
 
         /* write to all file stream */
         foreach ($downloadStorage->getFiles() as $data) {
-            fwrite($allFileStream, $downloadStorage->readFilePart($data['basename']));
+            fwrite($combinedTsStream, $downloadStorage->readFilePart($data['basename']));
         }
 
-        fclose($allFileStream);
+        fclose($combinedTsStream);
 
         /* log status change */
         $metaLog->set('status', 'converting')->save();
-    }
-
-    /**
-     * Convert file
-     *
-     * @param string $allFilePath
-     * @param DownloadMetaLog $metaLog
-     */
-    private function convertFile($allFilePath, DownloadMetaLog $metaLog)
-    {
-        try {
-            $convertedFilePath = preg_replace('/\.ts$/', '.mp4', $allFilePath);
-
-            Command::exec(
-                'ffmpeg -loglevel quiet -y -i {allFilePath} -bsf:a aac_adtstoasc -acodec copy -vcodec copy {convertedFilePath}',
-                [
-                    'allFilePath' => $allFilePath,
-                    'convertedFilePath' => $convertedFilePath
-                ]
-            );
-
-            $metaLog->set('status', 'converted');
-        } catch (\Exception $e) {
-            $metaLog->set('status', 'failed_conversion');
-        }
-
-        $metaLog->save();
     }
 }
