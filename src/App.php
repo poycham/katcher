@@ -20,7 +20,8 @@ class App
     protected $container;
 
     protected $providers = [
-        \Katcher\ServiceProviders\AppServiceProvider::class
+        \Katcher\ServiceProviders\AppServiceProvider::class,
+        \Katcher\ServiceProviders\RoutingServiceProvider::class
     ];
 
     /**
@@ -49,6 +50,17 @@ class App
     }
 
     /**
+     * Get dependency
+     *
+     * @param $alias
+     * @return mixed|object
+     */
+    public function get($alias)
+    {
+        return $this->container->get($alias);
+    }
+
+    /**
      * Add service providers
      */
     private function addServiceProviders()
@@ -69,7 +81,8 @@ class App
     {
         self::$instance = new static($basePath, $container);
 
-        self::$instance->addServiceProviders();
+        self::$instance
+            ->addServiceProviders();
 
         return self::$instance;
     }

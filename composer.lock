@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3587be11c6e55427a386cffaa1f6e4e0",
-    "content-hash": "f3215a17d36a2689cba36560da9ce5bc",
+    "hash": "eb97d8e541c9cd84fd846c4bd9b2b38b",
+    "content-hash": "73f36675437e229bee56a003d24be12e",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -736,6 +736,58 @@
                 "response"
             ],
             "time": "2015-05-04 20:22:00"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-foundation.git",
+                "reference": "1a764fc996e92f1877569923a135a6b80884fb1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/1a764fc996e92f1877569923a135a6b80884fb1c",
+                "reference": "1a764fc996e92f1877569923a135a6b80884fb1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "symfony/expression-language": "~2.8|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-02-18 09:00:40"
         }
     ],
     "packages-dev": null,

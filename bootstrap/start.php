@@ -10,7 +10,6 @@ $app = \Katcher\App::init(
     new \League\Container\Container()
 );
 
-
 exit;
 
 /* define dependencies */
