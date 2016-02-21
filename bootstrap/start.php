@@ -5,6 +5,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$app = \Katcher\App::init(
+    realpath(__DIR__) . '/../',
+    new \League\Container\Container()
+);
+
+
+exit;
+
 /* define dependencies */
 $basePath = realpath(__DIR__) . '/../';
 
