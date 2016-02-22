@@ -1,15 +1,23 @@
 <?php
 
 /**
+ * Get app
+ *
+ * @return \Katcher\App
+ */
+function app()
+{
+    return \Katcher\App::getInstance();
+}
+
+/**
  * Get container
  *
  * @return \League\Container\Container
  */
 function container()
 {
-    global $container;
-
-    return $container;
+    return app()->getContainer();
 }
 
 /**
@@ -19,9 +27,7 @@ function container()
  */
 function view()
 {
-    global $container;
-
-    return $container->get('templates');
+    return app()->get('templates');
 }
 
 /**

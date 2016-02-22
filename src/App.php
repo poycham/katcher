@@ -12,6 +12,7 @@ class App
     const PUBLIC_PATH = 'public';
     const STORAGE_PATH = 'storage';
     const VIEWS_PATH = 'resources/views';
+    const HELPERS_PATH = 'bootstrap/helpers.php';
 
     /**
      * @var string
@@ -51,11 +52,34 @@ class App
     }
 
     /**
+     * Get base path
+     *
      * @return string
      */
     public function getBasePath()
     {
         return $this->basePath;
+    }
+
+    /**
+     * Get container
+     *
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Get absolute path
+     *
+     * @param $relativePath
+     * @return string
+     */
+    public function getPath($relativePath)
+    {
+        return $this->container->get('path_generator')->path($relativePath);
     }
 
     /**

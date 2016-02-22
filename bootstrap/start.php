@@ -14,9 +14,9 @@ $app = \Katcher\App::init(
     new \League\Container\Container()
 );
 
+/* load helpers */
+require_once $app->getPath(\Katcher\App::HELPERS_PATH);
 
-
-var_dump($app->get('filesystem'));
 
 exit;
 
