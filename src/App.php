@@ -10,6 +10,7 @@ use League\Container\Container;
 class App
 {
     const PUBLIC_PATH = 'public';
+    const STORAGE_PATH = 'storage';
     const VIEWS_PATH = 'resources/views';
 
     /**
@@ -28,7 +29,8 @@ class App
     protected $providers = [
         \Katcher\ServiceProviders\AppServiceProvider::class,
         \Katcher\ServiceProviders\RoutingServiceProvider::class,
-        \Katcher\ServiceProviders\ViewServiceProvider::class
+        \Katcher\ServiceProviders\ViewServiceProvider::class,
+        \Katcher\ServiceProviders\FilesystemServiceProvider::class
     ];
 
     /**

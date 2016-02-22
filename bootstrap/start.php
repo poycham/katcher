@@ -10,7 +10,7 @@ $app = \Katcher\App::init(
     new \League\Container\Container()
 );
 
-var_dump($app->get('templates'));
+var_dump($app->get('filesystem'));
 
 exit;
 
@@ -19,18 +19,6 @@ $basePath = realpath(__DIR__) . '/../';
 
 $container = new \League\Container\Container();
 
-/* register path */
-$container->singleton('path_generator', function() use ($basePath) {
-    return new \Katcher\Components\PathGenerator($basePath);
-});
-
-/* register templates */
-$templates = new \League\Plates\Engine("{$basePath}/resources/views", 'tpl.php');
-$templates->loadExtension(
-    new \League\Plates\Extension\Asset("{$basePath}/public", false)
-);
-
-$container->add('templates', $templates, true);
 
 /* register local filesystem */
 $container->add('filesystem', function() use ($basePath) {
@@ -50,26 +38,6 @@ $container->add('filesystem', function() use ($basePath) {
     ]);
 }, true);
 
-$container->add('guzzle', 'GuzzleHttp\Client', true);
-
-/* register request */
-$container->singleton('request', function() {
-    return Request::createFromGlobals();
-});
-
-/* register url */
-$container->singleton('url_generator', function() use ($container) {
-    /* get base url */
-    /* @var Request $request */
-    $request = $container->get('request');
-    $baseURL = preg_replace(
-        '/\/(index.php)?$/',
-        '',
-        $request->server->get('REDIRECT_URL')
-    );
-
-    return new \Katcher\Components\UrlGenerator($baseURL);
-});
 
 require __DIR__ . '/helpers.php';
 require __DIR__ . '/routes.php';
