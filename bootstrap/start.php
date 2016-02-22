@@ -3,12 +3,18 @@
 use League\Flysystem\Adapter\Local;
 use Symfony\Component\HttpFoundation\Request;
 
-require __DIR__ . '/../vendor/autoload.php';
+/* load vendor autoload */
+$basePath = dirname(__DIR__);
 
+require_once "{$basePath}/vendor/autoload.php";
+
+/* initialize app */
 $app = \Katcher\App::init(
-    dirname(__DIR__),
+    $basePath,
     new \League\Container\Container()
 );
+
+
 
 var_dump($app->get('filesystem'));
 
