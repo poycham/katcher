@@ -10,6 +10,8 @@ $app = \Katcher\App::init(
     new \League\Container\Container()
 );
 
+var_dump($app->get('templates'));
+
 exit;
 
 /* define dependencies */

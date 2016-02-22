@@ -9,6 +9,9 @@ use League\Container\Container;
 
 class App
 {
+    const PUBLIC_PATH = 'public';
+    const VIEWS_PATH = 'resources/views';
+
     /**
      * @var string
      */
@@ -19,9 +22,13 @@ class App
      */
     protected $container;
 
+    /**
+     * @var array
+     */
     protected $providers = [
         \Katcher\ServiceProviders\AppServiceProvider::class,
-        \Katcher\ServiceProviders\RoutingServiceProvider::class
+        \Katcher\ServiceProviders\RoutingServiceProvider::class,
+        \Katcher\ServiceProviders\ViewServiceProvider::class
     ];
 
     /**
@@ -81,8 +88,7 @@ class App
     {
         self::$instance = new static($basePath, $container);
 
-        self::$instance
-            ->addServiceProviders();
+        self::$instance->addServiceProviders();
 
         return self::$instance;
     }
