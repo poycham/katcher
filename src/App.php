@@ -6,6 +6,9 @@ namespace Katcher;
 
 use Katcher\Components\PathGenerator;
 use League\Container\Container;
+use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class App
 {
@@ -13,6 +16,7 @@ class App
     const STORAGE_PATH = 'storage';
     const VIEWS_PATH = 'resources/views';
     const HELPERS_PATH = 'bootstrap/helpers.php';
+    const ROUTES_PATH = 'bootstrap/routes.php';
 
     /**
      * @var string
@@ -94,6 +98,30 @@ class App
     }
 
     /**
+     * Send response
+     */
+    public function sendResponse()
+    {
+        /** @var \League\Route\RouteCollection $router */
+        /** @var \Symfony\Component\HttpFoundation\Request $request */
+        /** @var \Symfony\Component\HttpFoundation\Response $response */
+        $router = $this->get('router');
+        $request = $this->get('request');
+        $psr7Request = $this->getPsr7Request($request);
+        var_dump($psr7Request->getUri()->getPath());
+        exit;
+        $dispatcher = $router->getDispatcher(
+            $this->getPsr7Request($request)
+        );
+        $requestURI = preg_replace('/^\/katcher/', '', $request->getPathInfo());
+
+        $match = $dispatcher->dispatch($request->getMethod(), $requestURI);
+        $response = call_user_func_array($match[1], [$request, new Response(), $match[2]]);
+
+        $response->send();
+    }
+
+    /**
      * Add service providers
      */
     private function addServiceProviders()
@@ -101,6 +129,19 @@ class App
         foreach ($this->providers as $value) {
             $this->container->addServiceProvider($value);
         }
+    }
+
+    /**
+     * Get psr7 request
+     *
+     * @param Request $request
+     * @return \Psr\Http\Message\ServerRequestInterface|\Zend\Diactoros\ServerRequest
+     */
+    private function getPsr7Request(Request $request)
+    {
+        $psr7factory = new DiactorosFactory();
+
+        return $psr7factory->createRequest($request);
     }
 
     /**

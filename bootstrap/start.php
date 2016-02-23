@@ -17,7 +17,10 @@ $app = \Katcher\App::init(
 /* load helpers */
 require_once $app->getPath(\Katcher\App::HELPERS_PATH);
 
+/* load routes */
+require_once $app->getPath(\Katcher\App::ROUTES_PATH);
 
+$app->sendResponse();
 exit;
 
 /* define dependencies */

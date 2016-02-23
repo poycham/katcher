@@ -6,20 +6,24 @@ namespace Katcher\ServiceProviders;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
+use League\Route\Strategy\RequestResponseStrategy;
 use Symfony\Component\HttpFoundation\Request;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        'routes',
+        'router',
         'request',
         'url_generator'
     ];
 
     public function register()
     {
-        $this->getContainer()->share('routes', function() {
-            return new RouteCollection($this->getContainer());
+        $this->getContainer()->share('router', function() {
+            $router = new RouteCollection($this->container);
+            $router->setStrategy(new RequestResponseStrategy());
+
+            return $router;
         });
 
         $this->getContainer()->share('request', function() {
