@@ -102,6 +102,9 @@ class App
      */
     public function sendResponse()
     {
+        $this->container->get('url_generator');
+        return;
+
         /** @var \League\Route\RouteCollection $router */
         /** @var \Symfony\Component\HttpFoundation\Request $request */
         /** @var \Symfony\Component\HttpFoundation\Response $response */
@@ -115,8 +118,8 @@ class App
         );
         $requestURI = preg_replace('/^\/katcher/', '', $request->getPathInfo());
 
-        $match = $dispatcher->dispatch($request->getMethod(), $requestURI);
-        $response = call_user_func_array($match[1], [$request, new Response(), $match[2]]);
+        /*$match = $dispatcher->dispatch($request->getMethod(), $requestURI);
+        $response = call_user_func_array($match[1], [$request, new Response(), $match[2]]);*/
 
         $response->send();
     }
