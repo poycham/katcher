@@ -38,12 +38,14 @@ class RoutingServiceProvider extends AbstractServiceProvider
             return $psr7request;
         });
 
-        $this->getContainer()->share('url_generator', function() {
+        $this->container->share('url_generator', function() {
             /* get base url */
             /* @var ServerRequestInterface $request */
-            $request = $this->getContainer()->get('request');
+            $request = $this->container->get('request');
+            $server = $request->getServerParams();
+            $baseURL = $server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'];
 
-            var_dump($request->getServerParams());
+            var_dump($baseURL);
             exit;
 
             $baseURL = preg_replace(

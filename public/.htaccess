@@ -1,7 +1,7 @@
 Options -MultiViews
 
 RewriteEngine On
-RewriteBase /katcher/
+RewriteBase /
 
 # Redirect Trailing Slashes...
 RewriteCond %{REQUEST_FILENAME} !-d
