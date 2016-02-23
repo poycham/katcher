@@ -18,8 +18,8 @@ class App
     const PUBLIC_PATH = 'public';
     const STORAGE_PATH = 'storage';
     const VIEWS_PATH = 'resources/views';
-    const HELPERS_PATH = 'bootstrap/helpers.php';
-    const ROUTES_PATH = 'bootstrap/routes.php';
+    const HELPERS_PATH = 'src/helpers.php';
+    const ROUTES_PATH = 'src/routes.php';
 
     /**
      * @var string
@@ -101,9 +101,49 @@ class App
     }
 
     /**
-     * Send response
+     * Add service providers
+     *
+     * @return $this
      */
-    public function sendResponse()
+    protected function addServiceProviders()
+    {
+        foreach ($this->providers as $value) {
+            $this->container->addServiceProvider($value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Load helpers
+     *
+     * @return $this
+     */
+    protected function loadHelpers()
+    {
+        require_once $this->getPath(\Katcher\App::HELPERS_PATH);
+
+        return $this;
+    }
+
+    /**
+     * Define routes
+     *
+     * @return $this
+     */
+    protected function defineRoutes()
+    {
+        $router = $this->get('router');
+
+        include_once $this->getPath(\Katcher\App::ROUTES_PATH);
+
+        return $this;
+    }
+
+    /**
+     * Send route response
+     */
+    protected function sendRouteResponse()
     {
         /** @var \League\Route\RouteCollection $router */
         $router = $this->get('router');
@@ -118,29 +158,19 @@ class App
     }
 
     /**
-     * Add service providers
-     */
-    protected function addServiceProviders()
-    {
-        foreach ($this->providers as $value) {
-            $this->container->addServiceProvider($value);
-        }
-    }
-
-    /**
-     * Initialize instance
+     * Start application
      *
      * @param string $basePath
      * @param Container $container
-     * @return App|static
      */
-    public static function init($basePath, Container $container)
+    public static function start($basePath, Container $container)
     {
         self::$instance = new static($basePath, $container);
 
-        self::$instance->addServiceProviders();
-
-        return self::$instance;
+        self::$instance->addServiceProviders()
+            ->loadHelpers()
+            ->defineRoutes()
+            ->sendRouteResponse();
     }
 
     /**

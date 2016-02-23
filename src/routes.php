@@ -1,8 +1,6 @@
 <?php
 
 /** @var \League\Route\RouteCollection $router */
-$router = app()->get('router');
-
 $router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
 $router->addRoute('POST', '/', 'Katcher\Controllers\KatcherController::downloadFiles');
 
