@@ -9,6 +9,7 @@ use League\Route\RouteCollection;
 use League\Route\Strategy\RequestResponseStrategy;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,6 +44,8 @@ class RoutingServiceProvider extends AbstractServiceProvider
 
             return $psr7factory->createResponse($response);
         });
+
+        $this->container->share('http_foundation_factory', HttpFoundationFactory::class);
 
         $this->container->share('url_generator', function() {
             /* @var ServerRequestInterface $request */

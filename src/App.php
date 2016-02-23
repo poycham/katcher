@@ -6,7 +6,10 @@ namespace Katcher;
 
 use Katcher\Components\PathGenerator;
 use League\Container\Container;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -102,34 +105,22 @@ class App
      */
     public function sendResponse()
     {
-        $a = $this->container->get('url_generator');
-        echo $a->url('asdasdas');
-        exit;
-        return;
-
         /** @var \League\Route\RouteCollection $router */
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        /** @var \Symfony\Component\HttpFoundation\Response $response */
         $router = $this->get('router');
-        $request = $this->get('request');
-        $psr7Request = $this->getPsr7Request($request);
-        var_dump($psr7Request->getUri()->getPath());
-        exit;
-        $dispatcher = $router->getDispatcher(
-            $this->getPsr7Request($request)
-        );
-        $requestURI = preg_replace('/^\/katcher/', '', $request->getPathInfo());
+        /** @var ServerRequestInterface $psr7Request */
+        $psr7Request = $this->get('request');
+        $psr7Response = $router->dispatch($psr7Request, $this->get('response'));
+        /** @var HttpFoundationFactory $httpFoundationFactory */
+        $httpFoundationFactory = $this->get('http_foundation_factory');
+        $httpFoundationResponse = $httpFoundationFactory->createResponse($psr7Response);
 
-        /*$match = $dispatcher->dispatch($request->getMethod(), $requestURI);
-        $response = call_user_func_array($match[1], [$request, new Response(), $match[2]]);*/
-
-        $response->send();
+        $httpFoundationResponse->send();
     }
 
     /**
      * Add service providers
      */
-    private function addServiceProviders()
+    protected function addServiceProviders()
     {
         foreach ($this->providers as $value) {
             $this->container->addServiceProvider($value);

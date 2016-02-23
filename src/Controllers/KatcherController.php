@@ -5,6 +5,8 @@ namespace Katcher\Controllers;
 
 
 use Katcher\ServiceLayers\KatcherService;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +24,11 @@ class KatcherController
         $this->service = $service;
     }
 
-    public function index(Request $request, Response $response)
+    public function index(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $response->setContent(view()->render('index'));
+        $viewContent = view()->render('index');
+
+        $response->getBody()->write($viewContent);
 
         return $response;
     }
