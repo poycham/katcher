@@ -10,6 +10,7 @@ use League\Route\Strategy\RequestResponseStrategy;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {
@@ -33,6 +34,14 @@ class RoutingServiceProvider extends AbstractServiceProvider
             $request = Request::createFromGlobals();
 
             return $psr7factory->createRequest($request);
+        });
+
+        $this->container->share('response', function() {
+            /** @var DiactorosFactory $psr7factory */
+            $psr7factory = $this->container->get('psr7factory');
+            $response = new Response();
+
+            return $psr7factory->createResponse($response);
         });
 
         $this->container->share('url_generator', function() {
