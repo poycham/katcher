@@ -102,7 +102,9 @@ class App
      */
     public function sendResponse()
     {
-        $this->container->get('url_generator');
+        $a = $this->container->get('url_generator');
+        echo $a->url('asdasdas');
+        exit;
         return;
 
         /** @var \League\Route\RouteCollection $router */
@@ -132,19 +134,6 @@ class App
         foreach ($this->providers as $value) {
             $this->container->addServiceProvider($value);
         }
-    }
-
-    /**
-     * Get psr7 request
-     *
-     * @param Request $request
-     * @return \Psr\Http\Message\ServerRequestInterface|\Zend\Diactoros\ServerRequest
-     */
-    private function getPsr7Request(Request $request)
-    {
-        $psr7factory = new DiactorosFactory();
-
-        return $psr7factory->createRequest($request);
     }
 
     /**
