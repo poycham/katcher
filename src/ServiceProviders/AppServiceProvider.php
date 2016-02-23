@@ -21,6 +21,10 @@ class AppServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
+        $this->getContainer()->share('app', function() {
+            return App::getInstance();
+        });
+
         $this->getContainer()->share('path_generator', function() {
             $basePath = App::getInstance()->getBasePath();
 
