@@ -4,8 +4,10 @@ $basePath = dirname(__DIR__);
 
 require_once "{$basePath}/vendor/autoload.php";
 
-\Katcher\App::start(
-    $basePath,
-    new \League\Container\Container()
+$container = new \League\Container\Container();
+$container->delegate(
+    new \League\Container\ReflectionContainer()
 );
+
+\Katcher\App::start($basePath, $container);
 

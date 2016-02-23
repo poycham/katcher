@@ -1,7 +1,9 @@
 <?php
 
+use Katcher\Controllers\KatcherController;
+
 /** @var \League\Route\RouteCollection $router */
-$router->addRoute('GET', '/', 'Katcher\Controllers\KatcherController::index');
+$router->get('/', [KatcherController::class, 'index']);
 $router->addRoute('POST', '/', 'Katcher\Controllers\KatcherController::downloadFiles');
 
 $router->addRoute('GET', '/convert/{folder}', 'Katcher\Controllers\KatcherController::showConvert');

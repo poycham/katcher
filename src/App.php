@@ -4,14 +4,10 @@
 namespace Katcher;
 
 
-use Katcher\Components\PathGenerator;
 use League\Container\Container;
-use Psr\Http\Message\ResponseInterface;
+use League\Container\ReflectionContainer;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class App
 {

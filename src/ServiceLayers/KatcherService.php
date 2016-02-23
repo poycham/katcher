@@ -7,6 +7,7 @@ namespace Katcher\ServiceLayers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Katcher\App;
 use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
@@ -16,15 +17,22 @@ use pastuhov\Command\Command;
 class KatcherService
 {
     /**
+     * @var App
+     */
+    protected $app;
+
+    /**
      * @var \League\Container\Container
      */
     protected $container;
 
     /**
      * Create KatcherService
+     * @param App $app
      */
-    public function __construct()
+    public function __construct(App $app)
     {
+        $this->app = $app;
         $this->container = container();
     }
 
