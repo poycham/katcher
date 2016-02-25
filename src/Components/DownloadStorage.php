@@ -47,7 +47,7 @@ class DownloadStorage
      * @param $path
      * @return string
      */
-    public function relativePath($path)
+    public function getRelativePath($path)
     {
         return "{$this->folder}/{$path}";
     }
@@ -63,7 +63,7 @@ class DownloadStorage
         /** @var Local $adapter */
         $adapter = $this->filesystem->getAdapter();
 
-        return $adapter->applyPathPrefix($this->relativePath($path));
+        return $adapter->applyPathPrefix($this->getRelativePath($path));
     }
 
     /**
@@ -73,7 +73,7 @@ class DownloadStorage
      */
     public function getFiles()
     {
-        $files = $this->filesystem->listContents($this->relativePath('files'));
+        $files = $this->filesystem->listContents($this->getRelativePath('files'));
 
         /* sort files by extension number */
         $getNum = function($fileName) {
@@ -105,7 +105,7 @@ class DownloadStorage
      */
     public function read($file)
     {
-        return $this->filesystem->read($this->relativePath($file));
+        return $this->filesystem->read($this->getRelativePath($file));
     }
 
     /**
@@ -128,9 +128,31 @@ class DownloadStorage
     {
         return json_decode(
             $this->filesystem->read(
-                $this->relativePath('meta.json')
+                $this->getRelativePath('meta.json')
             ),
             true
         );
+    }
+
+    /**
+     * Create initial download storage
+     *
+     * @param string $folder
+     * @param Filesystem $filesystem
+     * @return static
+     */
+    public static function create($folder, Filesystem $filesystem)
+    {
+        /* create directory */
+        $filesystem->createDir($folder);
+
+        $downloadStorage = new static($folder, $filesystem);
+
+        /* create files directory */
+        $filesystem->createDir(
+            $downloadStorage->getRelativePath('files')
+        );
+
+        return $downloadStorage;
     }
 }

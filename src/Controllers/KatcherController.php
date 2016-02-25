@@ -54,13 +54,11 @@ class KatcherController
      */
     public function downloadTs(ServerRequestInterface $request, ResponseInterface $response)
     {
-        var_dump($request->getParsedBody());
+        $folder = $this->service->downloadTs($request->getParsedBody());
         exit;
-
-        set_time_limit(0);
-
-        $folder = $this->service->downloadFiles($request->request->all());
         $redirectURL = url("convert/{$folder}");
+
+        exit;
 
         return new RedirectResponse($redirectURL);
     }

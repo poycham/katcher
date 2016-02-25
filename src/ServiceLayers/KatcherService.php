@@ -22,44 +22,48 @@ class KatcherService
     protected $app;
 
     /**
-     * @var \League\Container\Container
-     */
-    protected $container;
-
-    /**
      * Create KatcherService
      * @param App $app
      */
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->container = container();
     }
 
     /**
-     * Download files
+     * Download .ts files
      *
      * @param $data
      * @return string
      */
-    public function downloadFiles(array $data)
+    public function downloadTs(array $data)
     {
         $katcherURL = new KatcherUrl($data['url']);
-        $container = container();
-        /** @var $filesystem \League\Flysystem\Filesystem */
-        $filesystem = $container->get('filesystem');
+        $filesystem = $this->getFileSystem();
+        $folder = $katcherURL->folder();
 
-        $dir = $katcherURL->folder();
         /* delete duplicate directory */
-        if ($filesystem->has($dir)) {
-            $filesystem->deleteDir($dir);
+        if ($filesystem->has($folder)) {
+            $filesystem->deleteDir($folder);
         }
 
-        /* create directories */
-        $filesDir = "{$dir}/files";
+        /* create download storage */
+        $downloadStorage = DownloadStorage::create($folder, $filesystem);
 
-        $filesystem->createDir($dir);
-        $filesystem->createDir($filesDir);
+        /* initialize log */
+        $metaLog = DownloadMetaLog::create([
+            'status' => 'downloading',
+            'url' => $katcherURL->fileURL('%i'),
+            'parts' => [
+                'first' => $data['first_part'],
+                'last' => $data['last_part']
+            ],
+            'missingFiles' => [],
+            'nonexistentFiles' => [],
+            'downloadRetries' => 0
+        ], $downloadStorage);
+
+        return;
 
         /* create meta.json */
         $meta = [
@@ -70,7 +74,7 @@ class KatcherService
             'downloadRetries' => 0
         ];
 
-        $filesystem->write("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
+        $filesystem->write("{$folder}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
 
         /* download files */
         /** @var $guzzle Client */
@@ -124,9 +128,9 @@ class KatcherService
         /* update log */
         $meta['status'] = 'downloaded';
 
-        $filesystem->update("{$dir}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
+        $filesystem->update("{$folder}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
 
-        return $dir;
+        return $folder;
     }
 
     /**
@@ -252,7 +256,7 @@ class KatcherService
      */
     private function getFileSystem()
     {
-        return $this->container->get('filesystem');
+        return $this->app->get('filesystem');
     }
 
     /**

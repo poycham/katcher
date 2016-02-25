@@ -19,7 +19,7 @@ class DownloadMetaLog
     /**
      * @var array
      */
-    protected $meta;
+    protected $meta = [];
 
     /**
      * @param resource $stream
@@ -28,23 +28,20 @@ class DownloadMetaLog
     {
         $this->stream = $stream;
         $this->setPath();
-        $this->setMeta();
+        /*$this->setMeta();*/
     }
 
     /**
-     * Create through read
+     * Set meta
      *
-     * @param DownloadStorage $downloadStorage
-     * @return static
+     * @param array $meta
+     * @return $this
      */
-    public static function read(DownloadStorage $downloadStorage)
+    public function setMeta(array $meta)
     {
-        return new static(
-            fopen(
-                $downloadStorage->path('meta.json'),
-                'r+'
-            )
-        );
+        $this->meta = $meta;
+
+        return $this;
     }
 
     /**
@@ -106,13 +103,44 @@ class DownloadMetaLog
     }
 
     /**
-     * Set meta
+     * Create initial instance
+     *
+     * @param array $meta
+     * @param DownloadStorage $downloadStorage
+     * @return static
      */
-    private function setMeta()
+    public static function create(array $meta, DownloadStorage $downloadStorage)
     {
-        $this->meta = json_decode(
+        $metaLog = new static(
+            fopen(
+                $downloadStorage->path('meta.json'),
+                'w+'
+            )
+        );
+
+        $metaLog->setMeta($meta)->save();
+
+        return $metaLog;
+    }
+
+    /**
+     * Create through read
+     *
+     * @param DownloadStorage $downloadStorage
+     * @return static
+     */
+    public static function read(DownloadStorage $downloadStorage)
+    {
+        /*$this->meta = json_decode(
             fread($this->stream, filesize($this->path)),
             true
+        );*/
+
+        return new static(
+            fopen(
+                $downloadStorage->path('meta.json'),
+                'r+'
+            )
         );
     }
 }
