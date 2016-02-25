@@ -7,7 +7,7 @@ namespace Katcher\Controllers;
 use Katcher\ServiceLayers\KatcherService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -57,12 +57,13 @@ class KatcherController
         set_time_limit(0);
 
         $folder = $this->service->downloadTs($request->getParsedBody());
-        exit;
-        $redirectURL = url("convert/{$folder}");
 
-        exit;
+        /* redirect to convert page */
+        $response = new RedirectResponse(
+            url('convert/' . $folder)
+        );
 
-        return new RedirectResponse($redirectURL);
+        return $response;
     }
 
     /**
