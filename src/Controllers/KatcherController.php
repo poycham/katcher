@@ -19,11 +19,23 @@ class KatcherController
      */
     protected $service;
 
+    /**
+     * Create KatcherController
+     *
+     * @param KatcherService $service
+     */
     public function __construct(KatcherService $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * Show index page
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
     public function index(ServerRequestInterface $request, ResponseInterface $response)
     {
         $viewContent = view()->render('index');
@@ -36,12 +48,15 @@ class KatcherController
     /**
      * Handle post request to download files
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface|Request $request
+     * @param ResponseInterface|Response $response
      * @return RedirectResponse
      */
-    public function downloadFiles(Request $request, Response $response)
+    public function downloadTs(ServerRequestInterface $request, ResponseInterface $response)
     {
+        var_dump($request->getParsedBody());
+        exit;
+
         set_time_limit(0);
 
         $folder = $this->service->downloadFiles($request->request->all());

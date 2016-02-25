@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-5">
-        <form action="" method="POST">
+        <form action="download-ts" method="POST">
             <div class="form-group">
                 <input type="url" name="url" class="form-control" placeholder="URL" required>
             </div>
