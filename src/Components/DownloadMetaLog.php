@@ -114,6 +114,8 @@ class DownloadMetaLog
 
     /**
      * Save log file
+     *
+     * return $this;
      */
     public function save()
     {
@@ -124,6 +126,8 @@ class DownloadMetaLog
             $this->stream,
             json_encode($this->meta, JSON_PRETTY_PRINT)
         );
+
+        return $this;
     }
 
     /**

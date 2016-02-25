@@ -113,7 +113,9 @@ class KatcherService
         }
 
         /* update log */
-        $metaLog->set('status', 'downloaded')->save();
+        $metaLog->set('status', 'downloaded')
+            ->save()
+            ->close();
 
         return $folder;
     }
