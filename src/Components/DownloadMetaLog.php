@@ -55,14 +55,20 @@ class DownloadMetaLog
     }
 
     /**
-     * Get meta data
+     * Get meta data including nested
      *
-     * @param string $key
+     * @param string ...$keys
      * @return mixed
      */
-    public function get($key)
+    public function get(...$keys)
     {
-        return $this->meta[$key];
+        $value = $this->meta[array_shift($keys)];
+
+        foreach ($keys as $key) {
+            $value = $value[$key];
+        }
+
+        return $value;
     }
 
 

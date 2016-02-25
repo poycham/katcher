@@ -63,22 +63,10 @@ class KatcherService
             'downloadRetries' => 0
         ], $downloadStorage);
 
-        return;
-
-        /* create meta.json */
-        $meta = [
-            'status' => 'downloading',
-            'url' => $katcherURL->fileURL('%i'),
-            'missingFiles' => [],
-            'nonexistentFiles' => [],
-            'downloadRetries' => 0
-        ];
-
-        $filesystem->write("{$folder}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
-
+        var_dump($metaLog->get('parts'));
+        exit;
         /* download files */
-        /** @var $guzzle Client */
-        $guzzle = $container->get('guzzle');
+        $guzzle = new Client();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
             $retries = 0;
