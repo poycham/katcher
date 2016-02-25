@@ -75,7 +75,7 @@ class DownloadStorage
     public function writeFile($file, $contents)
     {
         return $this->filesystem->write(
-            $this->getRelativePath(self::FILES_PATH . '/' . $file),
+            $this->getRelativePath(static::FILES_PATH . '/' . $file),
             $contents
         );
     }
@@ -167,7 +167,7 @@ class DownloadStorage
 
         /* create files directory */
         $filesystem->createDir(
-            $downloadStorage->getRelativePath(self::FILES_PATH)
+            $downloadStorage->getRelativePath(static::FILES_PATH)
         );
 
         return $downloadStorage;

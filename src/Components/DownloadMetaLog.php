@@ -127,6 +127,16 @@ class DownloadMetaLog
     }
 
     /**
+     * Close file
+     */
+    public function close()
+    {
+        if (is_resource($this->stream)) {
+            fclose($this->stream);
+        }
+    }
+
+    /**
      * Set path
      */
     private function setPath()
