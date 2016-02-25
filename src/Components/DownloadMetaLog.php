@@ -71,7 +71,6 @@ class DownloadMetaLog
         return $value;
     }
 
-
     /**
      * Set meta data
      *
@@ -84,6 +83,33 @@ class DownloadMetaLog
         $this->meta[$key] = $value;
 
       return $this;
+    }
+
+    /**
+     * Push value to a meta value array
+     *
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    public function push($key, $value)
+    {
+        $this->meta[$key][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Increment a meta value
+     *
+     * @param $key
+     * @return $this
+     */
+    public function increment($key)
+    {
+        $this->meta[$key]++;
+
+        return $this;
     }
 
     /**

@@ -9,6 +9,8 @@ use League\Flysystem\Filesystem;
 
 class DownloadStorage
 {
+    const FILES_PATH = 'files';
+
     /**
      * @var string
      */
@@ -50,6 +52,32 @@ class DownloadStorage
     public function getRelativePath($path)
     {
         return "{$this->folder}/{$path}";
+    }
+
+    /**
+     * Read file
+     *
+     * @param string $file
+     * @return bool|false|string
+     */
+    public function read($file)
+    {
+        return $this->filesystem->read($this->getRelativePath($file));
+    }
+
+    /**
+     * Write file
+     *
+     * @param string $file
+     * @param string $contents
+     * @return bool
+     */
+    public function writeFile($file, $contents)
+    {
+        return $this->filesystem->write(
+            $this->getRelativePath(self::FILES_PATH . '/' . $file),
+            $contents
+        );
     }
 
     /**
@@ -98,17 +126,6 @@ class DownloadStorage
     }
 
     /**
-     * Read file
-     *
-     * @param string $file
-     * @return bool|false|string
-     */
-    public function read($file)
-    {
-        return $this->filesystem->read($this->getRelativePath($file));
-    }
-
-    /**
      * Read file part
      *
      * @param $fileName
@@ -150,7 +167,7 @@ class DownloadStorage
 
         /* create files directory */
         $filesystem->createDir(
-            $downloadStorage->getRelativePath('files')
+            $downloadStorage->getRelativePath(self::FILES_PATH)
         );
 
         return $downloadStorage;

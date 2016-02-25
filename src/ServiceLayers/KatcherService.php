@@ -53,6 +53,7 @@ class KatcherService
         /* initialize log */
         $metaLog = DownloadMetaLog::create([
             'status' => 'downloading',
+            'currentFile' => 0,
             'url' => $katcherURL->fileURL('%i'),
             'parts' => [
                 'first' => $data['first_part'],
@@ -63,12 +64,12 @@ class KatcherService
             'downloadRetries' => 0
         ], $downloadStorage);
 
-        var_dump($metaLog->get('parts'));
-        exit;
         /* download files */
         $guzzle = new Client();
 
         for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
+            $metaLog->set('currentFile', $i)->save();
+
             $retries = 0;
 
             while ($retries != KatcherDownload::RETRY_LIMIT) {
@@ -78,20 +79,18 @@ class KatcherService
                         'timeout' => KatcherDownload::CONNECTION_TIMEOUT
                     ]);
                 } catch (ClientException $e) {
-                    /* log nonexistent file if not found */
-                    $meta['nonexistentFiles'][] = (int) $i;
+                    $metaLog->push('nonexistentFiles', (int) $i)->save();
 
                     /* download next file */
                     continue 2;
                 } catch (RequestException $e) {
+                    $metaLog->increment('downloadRetries')->save();
+
                     $retries++;
 
-                    /* log retries */
-                    $meta['downloadRetries']++;
-
-                    /* log missing file */
+                    /* handle reaching the retry limit */
                     if ($retries == KatcherDownload::RETRY_LIMIT) {
-                        $meta['missingFiles'][] = (int) $i;
+                        $metaLog->push('missingFiles', (int) $i)->save();
 
                         /* download next file */
                         continue;
@@ -103,8 +102,8 @@ class KatcherService
                 }
 
                 /* save file */
-                $filesystem->write(
-                    "{$filesDir}/{$katcherURL->fileName($i)}",
+                $downloadStorage->writeFile(
+                    $katcherURL->fileName($i),
                     $response->getBody()->getContents()
                 );
 
@@ -114,9 +113,7 @@ class KatcherService
         }
 
         /* update log */
-        $meta['status'] = 'downloaded';
-
-        $filesystem->update("{$folder}/meta.json", json_encode($meta, JSON_PRETTY_PRINT));
+        $metaLog->set('status', 'downloaded')->save();
 
         return $folder;
     }
