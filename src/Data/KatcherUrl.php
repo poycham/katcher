@@ -9,7 +9,7 @@ class KatcherUrl
     /**
      * @var string
      */
-    protected $base;
+    protected $baseURL;
 
     /**
      * @var string
@@ -27,13 +27,13 @@ class KatcherUrl
     }
 
     /**
-     * Get base
+     * Get base URL
      *
      * @return string
      */
-    public function base()
+    public function getBaseURL()
     {
-        return $this->base;
+        return $this->baseURL;
     }
 
     /**
@@ -41,12 +41,12 @@ class KatcherUrl
      *
      * @return string
      */
-    public function format()
+    public function getFormat()
     {
         return $this->format;
     }
 
-    public function folder()
+    public function getFolder()
     {
         return $this->folder;
     }
@@ -57,9 +57,9 @@ class KatcherUrl
      * @param $filePart
      * @return string
      */
-    public function fileURL($filePart)
+    public function getFileURL($filePart)
     {
-        return $this->base . $this->fileName($filePart);
+        return $this->baseURL . $this->getFileName($filePart);
     }
 
     /**
@@ -68,7 +68,7 @@ class KatcherUrl
      * @param $filePart
      * @return string
      */
-    public function fileName($filePart)
+    public function getFileName($filePart)
     {
         return str_replace('%i', $filePart, $this->format);
     }
@@ -86,12 +86,12 @@ class KatcherUrl
         $file = $matches[1];
 
         /* set base */
-        $this->base = str_replace($file, '', $rawURL);
+        $this->baseURL = str_replace($file, '', $rawURL);
 
         /* set format */
         $this->format = preg_replace('/[0-9]+\.ts$/', '%i.ts', $file);
 
         /* set folder */
-        $this->folder = preg_replace(['/^http(s)?:\/\/[^\/]+\//', '/\/$/'], '', $this->base);
+        $this->folder = preg_replace(['/^http(s)?:\/\/[^\/]+\//', '/\/$/'], '', $this->baseURL);
     }
 }

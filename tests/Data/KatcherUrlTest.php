@@ -24,11 +24,11 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             'https://d152nid216lr13.cloudfront.net/6a155ef8-6571-38a6-8c8c-d83080d2428e/',
-            $this->katcherURL->base()
+            $this->katcherURL->getBaseURL()
         );
         $this->assertEquals(
             'media-uwmn73350_%i.ts',
-            $this->katcherURL->format()
+            $this->katcherURL->getFormat()
         );
     }
 
@@ -36,7 +36,7 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             'https://d152nid216lr13.cloudfront.net/6a155ef8-6571-38a6-8c8c-d83080d2428e/media-uwmn73350_27.ts',
-            $this->katcherURL->fileURL(27)
+            $this->katcherURL->getFileURL(27)
         );
     }
 
@@ -44,7 +44,7 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             'media-uwmn73350_23.ts',
-            $this->katcherURL->fileName(23)
+            $this->katcherURL->getFileName(23)
         );
     }
 
@@ -52,7 +52,7 @@ class KatcherUrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             '6a155ef8-6571-38a6-8c8c-d83080d2428e',
-            $this->katcherURL->folder()
+            $this->katcherURL->getFolder()
         );
     }
 }

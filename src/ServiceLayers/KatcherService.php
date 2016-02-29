@@ -7,7 +7,6 @@ namespace Katcher\ServiceLayers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use Katcher\App;
 use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
@@ -26,7 +25,7 @@ class KatcherService extends AbstractService
     {
         $katcherURL = new KatcherUrl($data['url']);
         $filesystem = $this->getFileSystem();
-        $folder = $katcherURL->folder();
+        $folder = $katcherURL->getFolder();
 
         /* delete duplicate directory */
         if ($filesystem->has($folder)) {
@@ -40,7 +39,7 @@ class KatcherService extends AbstractService
         $metaLog = DownloadMetaLog::create([
             'status' => 'downloading',
             'currentFile' => 0,
-            'url' => $katcherURL->fileURL('%i'),
+            'url' => $katcherURL->getFileURL('%i'),
             'parts' => [
                 'first' => $data['first_part'],
                 'last' => $data['last_part']
@@ -60,7 +59,7 @@ class KatcherService extends AbstractService
 
             while ($retries != KatcherDownload::RETRY_LIMIT) {
                 try {
-                    $response =  $guzzle->request('GET', $katcherURL->fileURL($i), [
+                    $response =  $guzzle->request('GET', $katcherURL->getFileURL($i), [
                         'verify' => false,
                         'timeout' => KatcherDownload::CONNECTION_TIMEOUT
                     ]);
@@ -89,7 +88,7 @@ class KatcherService extends AbstractService
 
                 /* save file */
                 $downloadStorage->writeFile(
-                    $katcherURL->fileName($i),
+                    $katcherURL->getFileName($i),
                     $response->getBody()->getContents()
                 );
 

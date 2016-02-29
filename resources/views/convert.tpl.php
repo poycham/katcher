@@ -16,7 +16,7 @@
                         Manually download these file(s) again:
                         <ul class="file-links">
                             <?php foreach ($missingFiles as $value) : ?>
-                                <li><a href="<?= $katcherURL->fileURL($value) ?>"><?= $value ?></a></li>
+                                <li><a href="<?= $katcherURL->getFileURL($value) ?>"><?= $value ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
@@ -27,7 +27,7 @@
                         These file(s) were not found:
                         <ul class="file-links">
                             <?php foreach ($nonexistentFiles as $value) : ?>
-                                <li><a href="<?= $katcherURL->fileURL($value) ?>"><?= $value ?></a></li>
+                                <li><a href="<?= $katcherURL->getFileURL($value) ?>"><?= $value ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
