@@ -5,7 +5,9 @@ namespace Katcher\ServiceLayers;
 
 
 use Katcher\AppInterface;
+use Katcher\Components\UrlGenerator;
 use League\Plates\Engine;
+use Zend\Diactoros\Response\RedirectResponse;
 
 abstract class AbstractService
 {
@@ -34,5 +36,19 @@ abstract class AbstractService
         $templates = $this->app->get('templates');
 
         return $templates->render($name, $data);
+    }
+
+    /**
+     * Get redirect response
+     *
+     * @param $uri
+     * @return RedirectResponse
+     */
+    public function getRedirectResponse($uri)
+    {
+        /** @var UrlGenerator $urlGenerator */
+        $urlGenerator = $this->app->get('url_generator');
+
+        return new RedirectResponse($urlGenerator->url($uri));
     }
 }

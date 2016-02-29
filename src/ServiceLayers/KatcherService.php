@@ -115,8 +115,6 @@ class KatcherService extends AbstractService
     public function getConvertViewData($folder)
     {
         $condViewData = [];
-
-        /* set conditional view data */
         $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
         $metaLog = DownloadMetaLog::read($downloadStorage);
         $hasMissingFiles = ($metaLog->count('missingFiles') > 0);
@@ -136,6 +134,8 @@ class KatcherService extends AbstractService
             $condViewData['hasNonexistentFiles'] = $hasNonexistentFiles;
             $condViewData['katcherURL'] = new KatcherUrl($metaLog->get('url'));
         }
+
+        $metaLog->close();
 
         /* set view data */
         $viewData = array_merge(compact(
@@ -177,7 +177,7 @@ class KatcherService extends AbstractService
             $metaLog->set('status', 'failed_conversion');
         }
 
-        $metaLog->save();
+        $metaLog->save()->close();
     }
 
     /**
