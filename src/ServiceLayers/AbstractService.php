@@ -37,15 +37,4 @@ abstract class AbstractService
 
         return $templates->render($name, $data);
     }
-
-    /**
-     * Get redirect response
-     *
-     * @param $uri
-     * @return RedirectResponse
-     */
-    public function getRedirectResponse($uri)
-    {
-        return new RedirectResponse($uri);
-    }
 }
