@@ -85,11 +85,11 @@ class KatcherController
      * @param array $args
      * @return RedirectResponse
      */
-    public function processConvert(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    public function convert(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $this->service->convertTsToMp4($args['folder']);
 
-        return $this->service->getRedirectResponse('download/' . $args['folder']);
+        return $this->service->getRedirectResponse('download-mp4/' . $args['folder']);
     }
 
     /**
