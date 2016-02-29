@@ -155,7 +155,7 @@ class DownloadMetaLog
     {
         $metaLog = new static(
             fopen(
-                $downloadStorage->path('meta.json'),
+                $downloadStorage->getPath('meta.json'),
                 'w+'
             )
         );
@@ -173,7 +173,7 @@ class DownloadMetaLog
      */
     public static function read(DownloadStorage $downloadStorage)
     {
-        $filePath = $downloadStorage->path('meta.json');
+        $filePath = $downloadStorage->getPath('meta.json');
         $fileStream = fopen($filePath, 'r+');
         $metaLog = new static($fileStream);
 

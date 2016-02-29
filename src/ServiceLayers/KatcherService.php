@@ -87,7 +87,7 @@ class KatcherService extends AbstractService
                 }
 
                 /* save file */
-                $downloadStorage->writeFile(
+                $downloadStorage->writeFilePart(
                     $katcherURL->getFileName($i),
                     $response->getBody()->getContents()
                 );
@@ -155,7 +155,7 @@ class KatcherService extends AbstractService
         $metaLog = DownloadMetaLog::read($downloadStorage);
 
         /* combine ts files */
-        $combinedTsPath = $downloadStorage->path("{$folder}.ts");
+        $combinedTsPath = $downloadStorage->getPath("{$folder}.ts");
 
         $this->combineTsFiles($combinedTsPath, $downloadStorage, $metaLog);
 
@@ -189,7 +189,7 @@ class KatcherService extends AbstractService
     {
         $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
 
-        return $downloadStorage->path("{$folder}.mp4");
+        return $downloadStorage->getPath("{$folder}.mp4");
     }
 
     /**

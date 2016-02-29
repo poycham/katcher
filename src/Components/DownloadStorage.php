@@ -34,16 +34,6 @@ class DownloadStorage
     }
 
     /**
-     * Get file system
-     *
-     * @return Filesystem
-     */
-    public function filesystem()
-    {
-        return $this->filesystem;
-    }
-
-    /**
      * Get relative path
      *
      * @param $path
@@ -51,7 +41,7 @@ class DownloadStorage
      */
     public function getRelativePath($path)
     {
-        return "{$this->folder}/{$path}";
+        return $this->folder . '/' . $path;
     }
 
     /**
@@ -66,13 +56,24 @@ class DownloadStorage
     }
 
     /**
+     * Read file part
+     *
+     * @param string $file
+     * @return bool|false|string
+     */
+    public function readFilePart($file)
+    {
+        return $this->read(static::FILES_PATH . '/' . $file);
+    }
+
+    /**
      * Write file
      *
      * @param string $file
      * @param string $contents
      * @return bool
      */
-    public function writeFile($file, $contents)
+    public function writeFilePart($file, $contents)
     {
         return $this->filesystem->write(
             $this->getRelativePath(static::FILES_PATH . '/' . $file),
@@ -86,7 +87,7 @@ class DownloadStorage
      * @param $path
      * @return string
      */
-    public function path($path)
+    public function getPath($path)
     {
         /** @var Local $adapter */
         $adapter = $this->filesystem->getAdapter();
@@ -123,32 +124,6 @@ class DownloadStorage
         usort($files, $sortByExtensionNumber);
 
         return $files;
-    }
-
-    /**
-     * Read file part
-     *
-     * @param $fileName
-     * @return bool|false|string
-     */
-    public function readFilePart($fileName)
-    {
-        return $this->read("files/{$fileName}");
-    }
-
-    /**
-     * Get meta
-     *
-     * @return array
-     */
-    public function meta()
-    {
-        return json_decode(
-            $this->filesystem->read(
-                $this->getRelativePath('meta.json')
-            ),
-            true
-        );
     }
 
     /**
