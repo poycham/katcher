@@ -5958,4 +5958,23 @@ body {
   padding-top: 20px;
 }
 
+.file-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+}
+
+.file-links li {
+  display: inline;
+}
+
+.file-links li:after {
+  content: ", ";
+}
+
+.file-links li:last-child:after {
+  content: ".";
+}
+
 /*# sourceMappingURL=maps/style.css.map */

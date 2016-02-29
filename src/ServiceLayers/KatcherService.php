@@ -126,46 +126,33 @@ class KatcherService
      * @param $folder
      * @return array
      */
-    public function combinerViewData($folder)
+    public function getConvertViewData($folder)
     {
-        /* conditional view data */
         $condViewData = [];
 
-        /** @var $filesystem \League\Flysystem\Filesystem */
-        $filesystem = container()->get('filesystem');
-
-        $meta = json_decode(
-            $filesystem->read("{$folder}/meta.json"),
-            true
-        );
-
-        /* set getDownloadLink function */
-        $katcherURL = new KatcherUrl($meta['url']);
-
-        $getDownloadLink = function($filePart) use ($katcherURL) {
-            return '<a href="'. $katcherURL->fileURL($filePart) .'">'. $filePart .'</a>';
-        };
-
         /* set conditional view data */
-        $hasMissingFiles = (count($meta['missingFiles']) > 0);
-        $hasNonexistentFiles = (count($meta['nonexistentFiles']) > 0);
+        $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
+        $metaLog = DownloadMetaLog::read($downloadStorage);
+        $hasMissingFiles = ($metaLog->count('missingFiles') > 0);
+        $hasNonexistentFiles = ($metaLog->count('nonexistentFiles') > 0);
         $isAllDownloaded = (! $hasNonexistentFiles && ! $hasMissingFiles);
 
         if (! $isAllDownloaded) {
             if ($hasMissingFiles) {
-                $condViewData['missingFiles'] = $meta['missingFiles'];
+                $condViewData['missingFiles'] = $metaLog->get('missingFiles');
             }
 
             if ($hasNonexistentFiles) {
-                $condViewData['nonexistentFiles'] = $meta['nonexistentFiles'];
+                $condViewData['nonexistentFiles'] = $metaLog->get('nonexistentFiles');
             }
+
+            $condViewData['hasMissingFiles'] = $hasMissingFiles;
+            $condViewData['hasNonexistentFiles'] = $hasNonexistentFiles;
+            $condViewData['katcherURL'] = new KatcherUrl($metaLog->get('url'));
         }
 
         /* set view data */
         $viewData = array_merge(compact(
-            'getDownloadLink',
-            'hasMissingFiles',
-            'hasNonexistentFiles',
             'isAllDownloaded'
         ), $condViewData);
 

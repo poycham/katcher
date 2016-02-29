@@ -76,7 +76,7 @@ class KatcherController
      */
     public function showConvert(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-        $viewData = $this->service->combinerViewData($args['folder']);
+        $viewData = $this->service->getConvertViewData($args['folder']);
         $viewContent = view()->render('convert', $viewData);
 
         $response->getBody()->write($viewContent);

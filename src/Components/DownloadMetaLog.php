@@ -12,11 +12,6 @@ class DownloadMetaLog
     protected $stream;
 
     /**
-     * @var string
-     */
-    protected $path;
-
-    /**
      * @var array
      */
     protected $meta = [];
@@ -27,8 +22,6 @@ class DownloadMetaLog
     public function __construct($stream)
     {
         $this->stream = $stream;
-        $this->setPath();
-        /*$this->setMeta();*/
     }
 
     /**
@@ -113,6 +106,17 @@ class DownloadMetaLog
     }
 
     /**
+     * Get count of a meta value array
+     *
+     * @param $key
+     * @return int
+     */
+    public function count($key)
+    {
+        return count($this->meta[$key]);
+    }
+
+    /**
      * Save log file
      *
      * return $this;
@@ -138,14 +142,6 @@ class DownloadMetaLog
         if (is_resource($this->stream)) {
             fclose($this->stream);
         }
-    }
-
-    /**
-     * Set path
-     */
-    private function setPath()
-    {
-        $this->path = stream_get_meta_data($this->stream)['uri'];
     }
 
     /**
@@ -177,16 +173,15 @@ class DownloadMetaLog
      */
     public static function read(DownloadStorage $downloadStorage)
     {
-        /*$this->meta = json_decode(
-            fread($this->stream, filesize($this->path)),
-            true
-        );*/
+        $filePath = $downloadStorage->path('meta.json');
+        $fileStream = fopen($filePath, 'r+');
+        $metaLog = new static($fileStream);
 
-        return new static(
-            fopen(
-                $downloadStorage->path('meta.json'),
-                'r+'
-            )
-        );
+        $metaLog->setMeta(json_decode(
+            fread($fileStream, filesize($filePath)),
+            true
+        ));
+
+        return $metaLog;
     }
 }

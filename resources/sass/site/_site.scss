@@ -5,3 +5,22 @@ body {
 .container-content {
   padding-top: $gap__next;
 }
+
+.file-links {
+  @include unstyled-list;
+  display: inline;
+
+  li {
+    display: inline;
+
+    &:after {
+      content: ", "
+    }
+
+    &:last-child {
+      &:after {
+        content: "."
+      }
+    }
+  }
+}
