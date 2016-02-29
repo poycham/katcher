@@ -25,7 +25,7 @@ class AppServiceProvider extends AbstractServiceProvider
             return App::getInstance();
         });
 
-        $this->getContainer()->share(App::class, $this->container->get('app'));
+        $this->getContainer()->share(\Katcher\AppInterface::class, $this->container->get('app'));
 
         $this->getContainer()->share('path_generator', function() {
             $basePath = App::getInstance()->getBasePath();

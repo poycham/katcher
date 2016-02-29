@@ -9,7 +9,7 @@ use League\Container\ReflectionContainer;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 
-class App
+class App implements AppInterface
 {
     const PUBLIC_PATH = 'public';
     const STORAGE_PATH = 'storage';

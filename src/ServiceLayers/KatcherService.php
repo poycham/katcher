@@ -14,22 +14,8 @@ use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
 use pastuhov\Command\Command;
 
-class KatcherService
+class KatcherService extends AbstractService
 {
-    /**
-     * @var App
-     */
-    protected $app;
-
-    /**
-     * Create KatcherService
-     * @param App $app
-     */
-    public function __construct(App $app)
-    {
-        $this->app = $app;
-    }
-
     /**
      * Download .ts files
      *
