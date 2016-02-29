@@ -15,13 +15,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
             <a class="navbar-brand" href="/">Katcher</a>
         </div>
 
@@ -39,7 +32,6 @@
 <!-- [scripts] -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="<?= $this->asset('/js/vendor/bootstrap.min.js') ?>"></script>
 <?= $this->section('scripts') ?>
 </body>
 </html>
