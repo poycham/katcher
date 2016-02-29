@@ -199,7 +199,7 @@ class KatcherService extends AbstractService
      * @param $fileName
      * @return bool|false|string
      */
-    public function getDownloadFileContent($fileName)
+    public function getMp4FileContent($fileName)
     {
         $downloadStorage = new DownloadStorage(
             basename($fileName, '.mp4'),

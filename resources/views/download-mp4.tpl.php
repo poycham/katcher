@@ -10,6 +10,6 @@
 
 <?php $this->start('scripts') ?>
     <script>
-        /*$('#download-form').submit();*/
+        $('#download-form').submit();
     </script>
 <?php $this->stop() ?>

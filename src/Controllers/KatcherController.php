@@ -8,9 +8,6 @@ use Katcher\ServiceLayers\KatcherService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class KatcherController
 {
@@ -118,27 +115,26 @@ class KatcherController
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * Download mp4
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @param array $args
-     * @return Response
+     * @return ResponseInterface
      */
-    public function downloadFile(Request $request, Response $response, array $args)
+    public function downloadMp4(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         /* set download headers */
-        $fileName = "{$args['folder']}.mp4";
-        $contentDisposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName
-        );
+        $fileName = $args['folder'] . '.mp4';
 
-        $response->headers->set('Content-Type', 'video/mp4');
-        $response->headers->set('Content-Disposition', $contentDisposition);
+        $response = $response
+            ->withHeader('Content-Type', 'video/mp4')
+            ->withHeader('Content-Disposition', 'attachment; filename=' . $fileName . ';');
 
         /* set download content */
-        $fileContent = $this->service->getDownloadFileContent($fileName);
-
-        $response->setContent($fileContent);
+        $response->getBody()->write(
+            $this->service->getMp4FileContent($fileName)
+        );
 
         return $response;
     }
