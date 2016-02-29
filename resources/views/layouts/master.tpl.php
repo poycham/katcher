@@ -9,7 +9,7 @@
     <title><?= $title ?></title>
 
     <!-- [styles] -->
-    <link href="<?= url($this->asset('css/style.css')) ?>" rel="stylesheet">
+    <link href="<?= $this->asset('/css/style.css') ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="<?= baseURL(); ?>">Katcher</a>
+            <a class="navbar-brand" href="/">Katcher</a>
         </div>
 
         <div id="navbar" class="collapse navbar-collapse">
@@ -38,8 +38,8 @@
 
 <!-- [scripts] -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="<?= url('js/vendor/jquery.min.js') ?>"><\/script>')</script>
-<script src="<?= url($this->asset('js/vendor/bootstrap.min.js')) ?>"></script>
+<script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="<?= $this->asset('/js/vendor/bootstrap.min.js') ?>"></script>
 <?= $this->section('scripts') ?>
 </body>
 </html>

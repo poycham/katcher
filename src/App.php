@@ -119,18 +119,6 @@ class App implements AppInterface
     }
 
     /**
-     * Load helpers
-     *
-     * @return $this
-     */
-    protected function loadHelpers()
-    {
-        require_once $this->getPath(\Katcher\App::HELPERS_PATH);
-
-        return $this;
-    }
-
-    /**
      * Define routes
      *
      * @return $this
@@ -174,7 +162,6 @@ class App implements AppInterface
         self::$instance = new static($basePath, $container);
 
         self::$instance->addServiceProviders()
-            ->loadHelpers()
             ->defineRoutes()
             ->sendRouteResponse();
     }
