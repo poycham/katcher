@@ -157,10 +157,12 @@ class App implements AppInterface
      * Start application
      *
      * @param string $basePath
-     * @param Container $container
      */
-    public static function start($basePath, Container $container)
+    public static function start($basePath)
     {
+        $container = new Container();
+        $container->delegate(new ReflectionContainer());
+
         self::$instance = new static($basePath, $container);
 
         self::$instance->addServiceProviders()
