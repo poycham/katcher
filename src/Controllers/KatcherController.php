@@ -103,15 +103,15 @@ class KatcherController
     /**
      * Show download page
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @param array $args
-     * @return Response
+     * @return ResponseInterface
      */
-    public function download(Request $request, Response $response, array $args)
+    public function showDownloadMp4(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-        $response->setContent(
-            view()->render('download')
+        $response->getBody()->write(
+            $this->service->getView('download-mp4')
         );
 
         return $response;
