@@ -35,9 +35,9 @@ class KatcherController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $viewContent = view()->render('index');
-
-        $response->getBody()->write($viewContent);
+        $response->getBody()->write(
+            $this->service->getView('index')
+        );
 
         return $response;
     }
