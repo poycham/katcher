@@ -6,6 +6,8 @@ namespace Katcher\Components;
 
 class DownloadMetaLog
 {
+    const FILE_NAME = 'meta.json';
+
     /**
      * @var resource
      */
@@ -35,16 +37,6 @@ class DownloadMetaLog
         $this->meta = $meta;
 
         return $this;
-    }
-
-    /**
-     * Get meta
-     *
-     * @return array
-     */
-    public function all()
-    {
-        return $this->meta;
     }
 
     /**
@@ -155,7 +147,7 @@ class DownloadMetaLog
     {
         $metaLog = new static(
             fopen(
-                $downloadStorage->getPath('meta.json'),
+                $downloadStorage->getPath(static::FILE_NAME),
                 'w+'
             )
         );
@@ -173,7 +165,7 @@ class DownloadMetaLog
      */
     public static function read(DownloadStorage $downloadStorage)
     {
-        $filePath = $downloadStorage->getPath('meta.json');
+        $filePath = $downloadStorage->getPath(static::FILE_NAME);
         $fileStream = fopen($filePath, 'r+');
         $metaLog = new static($fileStream);
 

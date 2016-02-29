@@ -45,6 +45,20 @@ class DownloadStorage
     }
 
     /**
+     * Get absolute path
+     *
+     * @param $path
+     * @return string
+     */
+    public function getPath($path)
+    {
+        /** @var Local $adapter */
+        $adapter = $this->filesystem->getAdapter();
+
+        return $adapter->applyPathPrefix($this->getRelativePath($path));
+    }
+
+    /**
      * Read file
      *
      * @param string $file
@@ -79,20 +93,6 @@ class DownloadStorage
             $this->getRelativePath(static::FILES_PATH . '/' . $file),
             $contents
         );
-    }
-
-    /**
-     * Get absolute path
-     *
-     * @param $path
-     * @return string
-     */
-    public function getPath($path)
-    {
-        /** @var Local $adapter */
-        $adapter = $this->filesystem->getAdapter();
-
-        return $adapter->applyPathPrefix($this->getRelativePath($path));
     }
 
     /**
