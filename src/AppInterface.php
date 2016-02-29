@@ -17,8 +17,8 @@ interface AppInterface
     /**
      * Get absolute path
      *
-     * @param $relativePath
+     * @param string $relativePath
      * @return string
      */
-    public function getPath($relativePath);
+    public function getPath($relativePath = '');
 }

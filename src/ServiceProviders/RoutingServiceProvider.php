@@ -17,7 +17,9 @@ class RoutingServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
         'router',
+        'psr7factory',
         'request',
+        'http_foundation_factory',
         'url_generator'
     ];
 

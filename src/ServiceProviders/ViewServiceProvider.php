@@ -5,6 +5,7 @@ namespace Katcher\ServiceProviders;
 
 
 use Katcher\App;
+use Katcher\AppInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ViewServiceProvider extends AbstractServiceProvider
@@ -22,16 +23,16 @@ class ViewServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->getContainer()->share('templates', function() {
-            /** @var \Katcher\Components\PathGenerator $pathGenerator */
-            $pathGenerator = $this->getContainer()->get('path_generator');
+            /** @var AppInterface $app */
+            $app = $this->container->get(AppInterface::class);
 
             $templates = new \League\Plates\Engine(
-                $pathGenerator->path(App::VIEWS_PATH),
+                $app->getPath(App::VIEWS_PATH),
                 'tpl.php'
             );
             $templates->loadExtension(
                 new \League\Plates\Extension\Asset(
-                    $pathGenerator->path(App::PUBLIC_PATH),
+                    $app->getPath(App::PUBLIC_PATH),
                     false
                 )
             );

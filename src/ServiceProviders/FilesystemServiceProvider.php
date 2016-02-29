@@ -5,6 +5,7 @@ namespace Katcher\ServiceProviders;
 
 
 use Katcher\App;
+use Katcher\AppInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\Adapter\Local;
 
@@ -22,12 +23,12 @@ class FilesystemServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share('filesystem', function() {
-            /** @var \Katcher\Components\PathGenerator $pathGenerator */
-            $pathGenerator = $this->container->get('path_generator');
+        /** @var AppInterface $app */
+        $app = $this->container->get(AppInterface::class);
 
+        $this->container->share('filesystem', function() use ($app) {
             $adapter = new Local(
-                $pathGenerator->path(App::STORAGE_PATH),
+                $app->getPath(App::STORAGE_PATH),
                 LOCK_EX,
                 Local::DISALLOW_LINKS,
                 [

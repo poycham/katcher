@@ -50,19 +50,33 @@ class App implements AppInterface
      */
     public function __construct($basePath, Container $container)
     {
-        $this->basePath = $basePath;
+        $this->basePath = $this->formatBasePath($basePath);
         $this->container = $container;
     }
 
     /**
-     * Get base path
+     * Get dependency
      *
+     * @param $alias
+     * @return mixed|object
+     */
+    public function get($alias)
+    {
+        return $this->container->get($alias);
+    }
+
+
+    /**
+     * Get absolute path
+     *
+     * @param string $relativePath
      * @return string
      */
-    public function getBasePath()
+    public function getPath($relativePath = '')
     {
-        return $this->basePath;
+        return $this->basePath . $relativePath;
     }
+
 
     /**
      * Get container
@@ -75,25 +89,19 @@ class App implements AppInterface
     }
 
     /**
-     * Get absolute path
+     * Format base path
      *
-     * @param $relativePath
+     * @param $basePath
      * @return string
      */
-    public function getPath($relativePath)
+    protected function formatBasePath($basePath)
     {
-        return $this->container->get('path_generator')->path($relativePath);
-    }
+        /* make sure there is a slash at the end */
+        if (preg_match('/[\/\\\]$/', $basePath)) {
+            return $basePath;
+        }
 
-    /**
-     * Get dependency
-     *
-     * @param $alias
-     * @return mixed|object
-     */
-    public function get($alias)
-    {
-        return $this->container->get($alias);
+        return $basePath . DIRECTORY_SEPARATOR;
     }
 
     /**

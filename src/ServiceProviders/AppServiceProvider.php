@@ -13,7 +13,7 @@ class AppServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'path_generator'
+        \Katcher\AppInterface::class
     ];
 
     /**
@@ -21,16 +21,6 @@ class AppServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share('app', function() {
-            return App::getInstance();
-        });
-
-        $this->getContainer()->share(\Katcher\AppInterface::class, $this->container->get('app'));
-
-        $this->getContainer()->share('path_generator', function() {
-            $basePath = App::getInstance()->getBasePath();
-
-            return new \Katcher\Components\PathGenerator($basePath);
-        });
+        $this->container->share(\Katcher\AppInterface::class, App::getInstance());
     }
 }
