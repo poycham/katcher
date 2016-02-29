@@ -19,8 +19,7 @@ class RoutingServiceProvider extends AbstractServiceProvider
         'router',
         'psr7factory',
         'request',
-        'http_foundation_factory',
-        'url_generator'
+        'http_foundation_factory'
     ];
 
     public function register()
@@ -48,14 +47,5 @@ class RoutingServiceProvider extends AbstractServiceProvider
         });
 
         $this->container->share('http_foundation_factory', HttpFoundationFactory::class);
-
-        $this->container->share('url_generator', function() {
-            /* @var ServerRequestInterface $request */
-            $request = $this->container->get('request');
-            $server = $request->getServerParams();
-            $baseURL = $server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'];
-
-            return new \Katcher\Components\UrlGenerator($baseURL);
-        });
     }
 }

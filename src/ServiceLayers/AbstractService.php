@@ -46,9 +46,6 @@ abstract class AbstractService
      */
     public function getRedirectResponse($uri)
     {
-        /** @var UrlGenerator $urlGenerator */
-        $urlGenerator = $this->app->get('url_generator');
-
-        return new RedirectResponse($urlGenerator->url($uri));
+        return new RedirectResponse($uri);
     }
 }

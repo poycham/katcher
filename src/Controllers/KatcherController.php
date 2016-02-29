@@ -55,7 +55,7 @@ class KatcherController
 
         $folder = $this->service->downloadTs($request->getParsedBody());
 
-        return $this->service->getRedirectResponse('convert/' . $folder);
+        return $this->service->getRedirectResponse('/convert/' . $folder);
     }
 
     /**
@@ -89,7 +89,7 @@ class KatcherController
     {
         $this->service->convertTsToMp4($args['folder']);
 
-        return $this->service->getRedirectResponse('download-mp4/' . $args['folder']);
+        return $this->service->getRedirectResponse('/download-mp4/' . $args['folder']);
     }
 
     /**
