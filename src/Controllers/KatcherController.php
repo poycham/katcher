@@ -45,8 +45,8 @@ class KatcherController
     /**
      * Handle post request to download files
      *
-     * @param ServerRequestInterface|Request $request
-     * @param ResponseInterface|Response $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @return RedirectResponse
      */
     public function downloadTs(ServerRequestInterface $request, ResponseInterface $response)
@@ -55,12 +55,7 @@ class KatcherController
 
         $folder = $this->service->downloadTs($request->getParsedBody());
 
-        /* redirect to convert page */
-        $response = new RedirectResponse(
-            url('convert/' . $folder)
-        );
-
-        return $response;
+        return $this->service->getRedirectResponse('convert/' . $folder);
     }
 
     /**
