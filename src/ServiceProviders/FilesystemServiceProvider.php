@@ -28,7 +28,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 
         $this->container->share('filesystem', function() use ($app) {
             $adapter = new Local(
-                $app->getPath(App::STORAGE_PATH),
+                $app->getPath('storage'),
                 LOCK_EX,
                 Local::DISALLOW_LINKS,
                 [

@@ -27,12 +27,12 @@ class ViewServiceProvider extends AbstractServiceProvider
             $app = $this->container->get(AppInterface::class);
 
             $templates = new \League\Plates\Engine(
-                $app->getPath(App::VIEWS_PATH),
+                $app->getPath('resources/views'),
                 'tpl.php'
             );
             $templates->loadExtension(
                 new \League\Plates\Extension\Asset(
-                    $app->getPath(App::PUBLIC_PATH),
+                    $app->getPath('public'),
                     false
                 )
             );

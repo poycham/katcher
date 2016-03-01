@@ -11,12 +11,6 @@ use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 
 class App implements AppInterface
 {
-    const PUBLIC_PATH = 'public';
-    const STORAGE_PATH = 'storage';
-    const VIEWS_PATH = 'resources/views';
-    const HELPERS_PATH = 'src/helpers.php';
-    const ROUTES_PATH = 'src/routes.php';
-
     /**
      * @var string
      */
@@ -127,7 +121,7 @@ class App implements AppInterface
     {
         $router = $this->get('router');
 
-        include_once $this->getPath(\Katcher\App::ROUTES_PATH);
+        include_once $this->getPath('src/routes.php');
 
         return $this;
     }

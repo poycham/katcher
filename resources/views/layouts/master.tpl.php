@@ -8,7 +8,6 @@
 
     <title><?= $title ?></title>
 
-    <!-- [styles] -->
     <link href="<?= $this->asset('/css/style.css') ?>" rel="stylesheet">
 </head>
 <body>
@@ -21,15 +20,14 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </nav>
 
 <div class="container container-content">
     <?= $this->section('content'); ?>
-</div><!-- /.container -->
+</div>
 
-<!-- [scripts] -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
 <?= $this->section('scripts') ?>
