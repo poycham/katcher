@@ -1,11 +1,9 @@
-var katcherNode = {
-    gulp: require('gulp'),
-    sass: require('gulp-sass'),
-    sourcemaps: require('gulp-sourcemaps'),
-    autoprefixer: require('gulp-autoprefixer')
-};
+var gulp = require('gulp'), 
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    autoprefixer = require('gulp-autoprefixer');
 
-var katcherSass = {
+var sassSettings = {
     files: './resources/sass/**/*.scss',
     input: './resources/sass/style.scss',
     output: './public/css',
@@ -19,32 +17,33 @@ var katcherSass = {
     }
 };
 
-(function (katcherNode, katcherSass) {
-    katcherNode.gulp.task('sass', function () {
-        return katcherNode.gulp
-            .src(katcherSass.input)
-            .pipe(katcherNode.sourcemaps.init())
-            .pipe(katcherNode.sass(katcherSass.options)).on('error', katcherNode.sass.logError)
-            .pipe(katcherNode.autoprefixer())
-            .pipe(katcherNode.sourcemaps.write(katcherSass.sourcemapPath))
-            .pipe(katcherNode.gulp.dest(katcherSass.output));
-    });
+gulp.task('sass', function () {
+    return gulp
+        .src(sassSettings.input)
+        .pipe(sourcemaps.init())
+        .pipe(sass(sassSettings.options)).on('error', sass.logError)
+        .pipe(autoprefixer())
+        .pipe(sourcemaps.write(sassSettings.sourcemapPath))
+        .pipe(gulp.dest(sassSettings.output));
+});
 
-    katcherNode.gulp.task('watch', function() {
-        return katcherNode.gulp
-            .watch(katcherSass.files, ['sass'])
-            .on('change', function(event) {
-                console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-            });
-    });
+gulp.task('watch', function() {
+    return gulp
+        .watch(sassSettings.files, ['sass'])
+        .on('change', function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+        });
+});
 
-    katcherNode.gulp.task('default', ['sass', 'watch']);
+gulp.task('default', ['sass', 'watch']);
 
-    katcherNode.gulp.task('prod', function () {
-        return katcherNode.gulp
-            .src(katcherSass.input)
-            .pipe(katcherNode.sass({ outputStyle: 'compressed' }))
-            .pipe(katcherNode.autoprefixer())
-            .pipe(katcherNode.gulp.dest(katcherSass.output));
-    });
-})(katcherNode, katcherSass);
+gulp.task('prod', function () {
+    return gulp
+        .src(sassSettings.input)
+        .pipe(sass({
+            outputStyle: 'compressed',
+            includePaths: sassSettings.options.includePaths
+        }))
+        .pipe(autoprefixer())
+        .pipe(gulp.dest(sassSettings.output));
+});
