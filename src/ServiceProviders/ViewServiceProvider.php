@@ -4,7 +4,6 @@
 namespace Katcher\ServiceProviders;
 
 
-use Katcher\App;
 use Katcher\AppInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -22,10 +21,10 @@ class ViewServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share('templates', function() {
-            /** @var AppInterface $app */
-            $app = $this->container->get(AppInterface::class);
+        /** @var AppInterface $app */
+        $app = $this->container->get(AppInterface::class);
 
+        $this->container->share('templates', function() use ($app) {
             $templates = new \League\Plates\Engine(
                 $app->getPath('resources/views'),
                 'tpl.php'

@@ -4,7 +4,6 @@
 namespace Katcher\ServiceProviders;
 
 
-use Katcher\App;
 use Katcher\AppInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\Adapter\Local;
