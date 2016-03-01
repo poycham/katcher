@@ -1,18 +1,5 @@
-Options -MultiViews
-
-RewriteEngine On
-RewriteBase /
-
-# Redirect Trailing Slashes...
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)/$ $1 [L,R]
-
-# Make index.php handle all requests
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
-
 <IfModule mod_expires.c>
+    # Cache assets
     ExpiresActive on
 
     ExpiresByType text/css "access plus 1 year"
@@ -23,4 +10,22 @@ RewriteRule ^ index.php [L]
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect trailing slashes
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ $1 [L,R]
+
+    # Make index.php handle all requests
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
 </IfModule>
