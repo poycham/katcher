@@ -621,7 +621,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/92a65c86c7e0e3e672a5ce96324ed955e054eb22",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/8718575c2df473c611be386aada4f26a7040491c",
                 "reference": "92a65c86c7e0e3e672a5ce96324ed955e054eb22",
                 "shasum": ""
             },
@@ -1684,7 +1684,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/939b8e10c4e0e1135144fb09e12a3d32ff129e4a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/ab0314f7544d600ea7917f02cdad774358b81113",
                 "reference": "939b8e10c4e0e1135144fb09e12a3d32ff129e4a",
                 "shasum": ""
             },

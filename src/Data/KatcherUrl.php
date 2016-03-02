@@ -14,16 +14,23 @@ class KatcherUrl
     /**
      * @var string
      */
-    protected $format;
+    protected $fileFormat;
 
     /**
      * @var string
      */
     protected $folder;
 
-    public function __construct($rawURL)
+    /**
+     * Create Katcher URL
+     *
+     * @param $baseURL
+     * @param $fileFormat
+     */
+    public function __construct($baseURL, $fileFormat)
     {
-        $this->setProperties($rawURL);
+        $this->baseURL = $baseURL;
+        $this->fileFormat = $fileFormat;
     }
 
     /**
@@ -37,29 +44,13 @@ class KatcherUrl
     }
 
     /**
-     * Set format
+     * Get file format
      *
      * @return string
      */
-    public function getFormat()
+    public function getFileFormat()
     {
-        return $this->format;
-    }
-
-    public function getFolder()
-    {
-        return $this->folder;
-    }
-
-    /**
-     * Get file url
-     *
-     * @param $filePart
-     * @return string
-     */
-    public function getFileURL($filePart)
-    {
-        return $this->baseURL . $this->getFileName($filePart);
+        return $this->fileFormat;
     }
 
     /**
@@ -70,28 +61,55 @@ class KatcherUrl
      */
     public function getFileName($filePart)
     {
-        return str_replace('%i', $filePart, $this->format);
+        return str_replace('%i', $filePart, $this->fileFormat);
     }
 
     /**
-     * Set properties
+     * Get file url
      *
-     * @param $rawURL
+     * @param $filePart
+     * @return string
      */
-    private function setProperties($rawURL)
+    public function getFileURL($filePart)
+    {
+        return $this->baseURL . '/' . $this->getFileName($filePart);
+    }
+
+    /**
+     * Get base url last uri
+     *
+     * @return string
+     */
+    public function getBaseLastUri()
+    {
+        if (preg_match('/[\/]([^\/]+)$/', $this->baseURL, $matches)) {
+            return $matches[1];
+        }
+    }
+
+    /**
+     * Create from url
+     *
+     * @param $url
+     * @return KatcherUrl
+     */
+    public static function createFromUrl($url)
     {
         /* extract file part */
-        preg_match('/\/([^\/]+)$/', $rawURL, $matches);
+        if (! preg_match('/\/([^\/]+\.ts)$/', $url, $matches)) {
+            throw new \DomainException('The URL must end with .ts');
+
+            return;
+        }
 
         $file = $matches[1];
 
         /* set base */
-        $this->baseURL = str_replace($file, '', $rawURL);
+        $baseURL = str_replace('/' . $file, '', $url);
 
         /* set format */
-        $this->format = preg_replace('/[0-9]+\.ts$/', '%i.ts', $file);
+        $fileFormat = preg_replace('/[0-9]+\.ts$/', '%i.ts', $file);
 
-        /* set folder */
-        $this->folder = preg_replace(['/^http(s)?:\/\/[^\/]+\//', '/\/$/'], '', $this->baseURL);
+        return new static($baseURL, $fileFormat);
     }
 }

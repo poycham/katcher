@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {
+    /**
+     * @var array
+     */
     protected $provides = [
         'router',
         'psr7factory',
@@ -20,6 +23,9 @@ class RoutingServiceProvider extends AbstractServiceProvider
         'http_foundation_factory'
     ];
 
+    /**
+     * Register dependencies
+     */
     public function register()
     {
         $this->container->share('router', function() {
