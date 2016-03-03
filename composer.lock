@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2c001f627840f70d46e5c6f4c68cb41d",
-    "content-hash": "26c0b6a1902cfba0950eeaa978edc63c",
+    "hash": "69b1d55643b63da26c6f5e07e854feae",
+    "content-hash": "b752922d63965912322fe5b57fff836f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -204,6 +204,49 @@
                 "uri"
             ],
             "time": "2016-02-18 21:54:00"
+        },
+        {
+            "name": "hundredminds/php-validation",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/HundredMinds/php-validation.git",
+                "reference": "5e262bcab2148bd8109f026d307c2932159553f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/HundredMinds/php-validation/zipball/5e262bcab2148bd8109f026d307c2932159553f9",
+                "reference": "5e262bcab2148bd8109f026d307c2932159553f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Validator.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Timur Baymbetov",
+                    "email": "timur@baymbetov.com"
+                },
+                {
+                    "name": "Tasos Bekos"
+                },
+                {
+                    "name": "Corey Ballou",
+                    "email": "admins@blackbe.lt"
+                }
+            ],
+            "description": "A PHP 5.3 Class for Easy Form Validation, forked from blackbelt/php-validation",
+            "keywords": [
+                "validation"
+            ],
+            "time": "2014-09-05 09:43:21"
         },
         {
             "name": "league/container",

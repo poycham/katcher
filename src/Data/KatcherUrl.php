@@ -17,12 +17,7 @@ class KatcherUrl
     protected $fileFormat;
 
     /**
-     * @var string
-     */
-    protected $folder;
-
-    /**
-     * Create Katcher URL
+     * Create KatcherURL
      *
      * @param $baseURL
      * @param $fileFormat

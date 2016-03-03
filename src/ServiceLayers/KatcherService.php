@@ -11,6 +11,7 @@ use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
 use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
+use Katcher\Exceptions\ValidatorException;
 use pastuhov\Command\Command;
 
 class KatcherService extends AbstractService
@@ -23,11 +24,32 @@ class KatcherService extends AbstractService
      */
     public function downloadTs(array $data)
     {
+        /* validate data */
+        $validator = new \Validator($data);
+        $validator
+            ->filter('trim')
+            ->required()
+            ->url()
+            ->endsWith('.ts')
+            ->validate('url', false, 'URL');
+        $validator
+            ->integer()
+            ->validate('first_part', false, 'First Part');
+        $validator
+            ->integer()
+            ->validate('last_part', false, 'Last Part');
+
+        if ($validator->hasErrors()) {
+            throw new ValidatorException($validator->getAllErrors());
+        }
+
+        /* delete duplicate directory */
+        $data = $validator->getValidData();
         $katcherURL = new KatcherUrl($data['url']);
         $filesystem = $this->getFileSystem();
         $folder = $katcherURL->getFolder();
 
-        /* delete duplicate directory */
+
         if ($filesystem->has($folder)) {
             $filesystem->deleteDir($folder);
         }

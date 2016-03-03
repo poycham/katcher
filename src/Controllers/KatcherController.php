@@ -4,6 +4,7 @@
 namespace Katcher\Controllers;
 
 
+use Katcher\Exceptions\ValidatorException;
 use Katcher\ServiceLayers\KatcherService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -53,7 +54,14 @@ class KatcherController
     {
         set_time_limit(0);
 
-        $folder = $this->service->downloadTs($request->getParsedBody());
+        $input = $request->getParsedBody();
+
+        try {
+            $folder = $this->service->downloadTs($input);
+        } catch (ValidatorException $e) {
+            var_dump($e->getErrors());
+            exit;
+        }
 
         return new RedirectResponse('/convert/' . $folder);
     }
