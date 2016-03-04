@@ -5,6 +5,7 @@ namespace Katcher\Controllers;
 
 
 use Katcher\AppInterface;
+use Zend\Diactoros\Response\RedirectResponse;
 
 abstract class AbstractController implements ControllerInterface
 {
@@ -36,6 +37,19 @@ abstract class AbstractController implements ControllerInterface
         $templates = $this->app->get('templates');
 
         return $templates->render($name, $data);
+    }
+
+    /**
+     * Get redirect response
+     *
+     * @param string|UriInterface $uri URI for the Location header.
+     * @param int $status Integer status code for the redirect; 302 by default.
+     * @param array $headers Array of headers to use at initialization.
+     * @return RedirectResponse
+     */
+    public function getRedirectResponse($uri, $status = 302, array $headers = [])
+    {
+        return new RedirectResponse($uri, $status, $headers);
     }
 
     /**

@@ -27,32 +27,7 @@ class KatcherController extends AbstractController
         $this->service = $service;
     }
 
-    /**
-     * Handle post request to download files
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @return RedirectResponse
-     */
-    public function downloadTs(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    ) {
-        set_time_limit(0);
 
-        $input = $request->getParsedBody();
-
-        try {
-            $folder = $this->service->downloadTs($input);
-        } catch (ValidatorException $e) {
-            $this->service->setFlash('errors', $e->getErrors());
-            $this->service->setFlash('input', $input);
-
-            return new RedirectResponse('/');
-        }
-
-        return new RedirectResponse('/convert/' . $folder);
-    }
 
     /**
      * Show convert page

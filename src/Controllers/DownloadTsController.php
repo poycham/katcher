@@ -4,6 +4,7 @@
 namespace Katcher\Controllers;
 
 
+use Katcher\Exceptions\ValidatorException;
 use Katcher\ServiceLayers\DownloadTsService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -46,5 +47,32 @@ class DownloadTsController extends AbstractController
         );
 
         return $response;
+    }
+
+    /**
+     * Handle post request to download files
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return RedirectResponse
+     */
+    public function downloadTs(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ) {
+        set_time_limit(0);
+
+        $input = $request->getParsedBody();
+
+        try {
+            $folder = $this->service->downloadTs($input);
+        } catch (ValidatorException $e) {
+            $this->setFlash('errors', $e->getErrors());
+            $this->setFlash('input', $input);
+
+            return $this->getRedirectResponse('/');
+        }
+
+        return $this->getRedirectResponse('/convert/' . $folder);
     }
 }
