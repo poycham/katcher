@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Katcher\Components\DownloadMetaLog;
 use Katcher\Components\DownloadStorage;
+use Katcher\Data\Input;
 use Katcher\Data\KatcherDownload;
 use Katcher\Data\KatcherUrl;
 use Katcher\Exceptions\ValidatorException;
@@ -17,10 +18,33 @@ use pastuhov\Command\Command;
 class KatcherService extends AbstractService
 {
     /**
+     * Get index view data
+     *
+     * @param array $flash
+     * @return array
+     */
+    public function getIndexViewData(array $flash)
+    {
+        $input = Input::createFromKeys([
+            'url',
+            'first_part',
+            'last_part'
+        ], $flash['input']);
+
+        $viewData = [
+            'input' => $input,
+            'errors' => $flash['errors']
+        ];
+
+        return $viewData;
+    }
+
+    /**
      * Download .ts files
      *
-     * @param $data
+     * @param array $data
      * @return string
+     * @throws ValidatorException
      */
     public function downloadTs(array $data)
     {

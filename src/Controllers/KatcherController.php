@@ -34,10 +34,17 @@ class KatcherController
      * @param ResponseInterface $response
      * @return ResponseInterface
      */
-    public function index(ServerRequestInterface $request, ResponseInterface $response)
-    {
+    public function index(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ) {
+        $viewData = $this->service->getIndexViewData([
+            'input' => $this->service->getFlashArray('input'),
+            'errors' => $this->service->getFlashArray('errors')
+        ]);
+
         $response->getBody()->write(
-            $this->service->getView('index')
+            $this->service->getView('index', $viewData)
         );
 
         return $response;
@@ -50,8 +57,10 @@ class KatcherController
      * @param ResponseInterface $response
      * @return RedirectResponse
      */
-    public function downloadTs(ServerRequestInterface $request, ResponseInterface $response)
-    {
+    public function downloadTs(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ) {
         set_time_limit(0);
 
         $input = $request->getParsedBody();
@@ -59,8 +68,10 @@ class KatcherController
         try {
             $folder = $this->service->downloadTs($input);
         } catch (ValidatorException $e) {
-            var_dump($e->getErrors());
-            exit;
+            $this->service->setFlash('errors', $e->getErrors());
+            $this->service->setFlash('input', $input);
+
+            return new RedirectResponse('/');
         }
 
         return new RedirectResponse('/convert/' . $folder);
