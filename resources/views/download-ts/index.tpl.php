@@ -1,5 +1,5 @@
-<?php $this->layout('layouts/master', ['title' => 'Katcher - Download .ts Videos'])
-    /** @var \Katcher\Data\Input $input */
+<?php $this->layout('layouts/master', ['title' => 'Katcher - Download .ts Videos from katch.me'])
+/** @var \Katcher\Data\Input $input */
 ?>
 
 <div class="row">

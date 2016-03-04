@@ -28,29 +28,6 @@ class KatcherController extends AbstractController
     }
 
     /**
-     * Show index page
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @return ResponseInterface
-     */
-    public function index(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    ) {
-        $viewData = $this->service->getIndexViewData([
-            'input' => $this->getFlashArray('input'),
-            'errors' => $this->getFlashArray('errors')
-        ]);
-
-        $response->getBody()->write(
-            $this->getView('index', $viewData)
-        );
-
-        return $response;
-    }
-
-    /**
      * Handle post request to download files
      *
      * @param ServerRequestInterface $request

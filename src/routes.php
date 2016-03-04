@@ -3,7 +3,7 @@
 use Katcher\Controllers\KatcherController;
 
 /** @var \League\Route\RouteCollection $router */
-$router->get('/', [KatcherController::class, 'index']);
+$router->get('/', [\Katcher\Controllers\DownloadTsController::class, 'index']);
 
 $router->post('/download-ts', [KatcherController::class, 'downloadTs']);
 
