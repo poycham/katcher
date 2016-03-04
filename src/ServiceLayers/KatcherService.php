@@ -69,9 +69,9 @@ class KatcherService extends AbstractService
 
         /* delete duplicate directory */
         $data = $validator->getValidData();
-        $katcherURL = new KatcherUrl($data['url']);
+        $katcherURL = KatcherUrl::createFromUrl($data['url']);
         $filesystem = $this->getFileSystem();
-        $folder = $katcherURL->getFolder();
+        $folder = $katcherURL->getBaseLastUri();
 
 
         if ($filesystem->has($folder)) {
