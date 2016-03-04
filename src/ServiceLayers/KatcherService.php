@@ -177,7 +177,7 @@ class KatcherService extends AbstractService
 
             $condViewData['hasMissingFiles'] = $hasMissingFiles;
             $condViewData['hasNonexistentFiles'] = $hasNonexistentFiles;
-            $condViewData['katcherURL'] = new KatcherUrl($metaLog->get('url'));
+            $condViewData['katcherURL'] = KatcherUrl::createFromUrl($metaLog->get('url'));
         }
 
         $metaLog->close();
