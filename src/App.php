@@ -28,6 +28,7 @@ class App implements AppInterface
         \Katcher\ServiceProviders\AppServiceProvider::class,
         \Katcher\ServiceProviders\RoutingServiceProvider::class,
         \Katcher\ServiceProviders\SessionServiceProvider::class,
+        \Katcher\ServiceProviders\ControllerServiceProvider::class,
         \Katcher\ServiceProviders\ViewServiceProvider::class,
         \Katcher\ServiceProviders\FilesystemServiceProvider::class
     ];

@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 
-class KatcherController
+class KatcherController extends AbstractController
 {
     /**
      * @var KatcherService
@@ -39,12 +39,12 @@ class KatcherController
         ResponseInterface $response
     ) {
         $viewData = $this->service->getIndexViewData([
-            'input' => $this->service->getFlashArray('input'),
-            'errors' => $this->service->getFlashArray('errors')
+            'input' => $this->getFlashArray('input'),
+            'errors' => $this->getFlashArray('errors')
         ]);
 
         $response->getBody()->write(
-            $this->service->getView('index', $viewData)
+            $this->getView('index', $viewData)
         );
 
         return $response;
