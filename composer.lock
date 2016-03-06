@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69b1d55643b63da26c6f5e07e854feae",
-    "content-hash": "b752922d63965912322fe5b57fff836f",
+    "hash": "3d65ffc6636f5345a1608f5b5ce126ae",
+    "content-hash": "aebf8ef0ca1da5eee0b744b32554756f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -40,12 +40,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "739b9c8378c462943c42fee5353453ab4164ed8e"
+                "reference": "30f8346719d2ba1da9b2799f60b3dea360d908f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/739b9c8378c462943c42fee5353453ab4164ed8e",
-                "reference": "739b9c8378c462943c42fee5353453ab4164ed8e",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/30f8346719d2ba1da9b2799f60b3dea360d908f4",
+                "reference": "30f8346719d2ba1da9b2799f60b3dea360d908f4",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-02-17 21:09:10"
+            "time": "2016-03-05 02:10:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -660,12 +660,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "92a65c86c7e0e3e672a5ce96324ed955e054eb22"
+                "reference": "2af0ebbacefec6865ea8ec2d1291b60ee69e41af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/8718575c2df473c611be386aada4f26a7040491c",
-                "reference": "92a65c86c7e0e3e672a5ce96324ed955e054eb22",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/2af0ebbacefec6865ea8ec2d1291b60ee69e41af",
+                "reference": "2af0ebbacefec6865ea8ec2d1291b60ee69e41af",
                 "shasum": ""
             },
             "require": {
@@ -704,7 +704,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-28 16:28:07"
+            "time": "2016-03-04 09:04:18"
         },
         {
             "name": "symfony/psr-http-message-bridge",
@@ -766,12 +766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "c866b82a964a82aaa40b971fd344f882ca9b92d9"
+                "reference": "77965ac936d7d9b4ec71d5925eecb7d3d98c71ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/c866b82a964a82aaa40b971fd344f882ca9b92d9",
-                "reference": "c866b82a964a82aaa40b971fd344f882ca9b92d9",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/77965ac936d7d9b4ec71d5925eecb7d3d98c71ba",
+                "reference": "77965ac936d7d9b4ec71d5925eecb7d3d98c71ba",
                 "shasum": ""
             },
             "require": {
@@ -808,7 +808,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-01-04 21:39:41"
+            "time": "2016-03-05 20:46:59"
         }
     ],
     "packages-dev": [
@@ -1723,12 +1723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "939b8e10c4e0e1135144fb09e12a3d32ff129e4a"
+                "reference": "801d412451594f7c9e7950a016a377798cf9dfa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/ab0314f7544d600ea7917f02cdad774358b81113",
-                "reference": "939b8e10c4e0e1135144fb09e12a3d32ff129e4a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/801d412451594f7c9e7950a016a377798cf9dfa0",
+                "reference": "801d412451594f7c9e7950a016a377798cf9dfa0",
                 "shasum": ""
             },
             "require": {
@@ -1764,7 +1764,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-28 10:09:55"
+            "time": "2016-03-04 07:56:56"
         }
     ],
     "aliases": [],
@@ -1772,6 +1772,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.6"
+    },
     "platform-dev": []
 }
