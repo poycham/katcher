@@ -17,44 +17,7 @@ use pastuhov\Command\Command;
 
 class KatcherService extends AbstractService
 {
-    /**
-     * View data for combiner page
-     *
-     * @param $folder
-     * @return array
-     */
-    public function getConvertViewData($folder)
-    {
-        $condViewData = [];
-        $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
-        $metaLog = DownloadMetaLog::read($downloadStorage);
-        $hasMissingFiles = ($metaLog->count('missingFiles') > 0);
-        $hasNonexistentFiles = ($metaLog->count('nonexistentFiles') > 0);
-        $isAllDownloaded = (! $hasNonexistentFiles && ! $hasMissingFiles);
 
-        if (! $isAllDownloaded) {
-            if ($hasMissingFiles) {
-                $condViewData['missingFiles'] = $metaLog->get('missingFiles');
-            }
-
-            if ($hasNonexistentFiles) {
-                $condViewData['nonexistentFiles'] = $metaLog->get('nonexistentFiles');
-            }
-
-            $condViewData['hasMissingFiles'] = $hasMissingFiles;
-            $condViewData['hasNonexistentFiles'] = $hasNonexistentFiles;
-            $condViewData['katcherURL'] = KatcherUrl::createFromUrl($metaLog->get('url'));
-        }
-
-        $metaLog->close();
-
-        /* set view data */
-        $viewData = array_merge(compact(
-            'isAllDownloaded'
-        ), $condViewData);
-
-        return $viewData;
-    }
 
     /**
      * Convert .ts files to .mp4

@@ -7,7 +7,7 @@ $router->get('/', [\Katcher\Controllers\DownloadTsController::class, 'index']);
 
 $router->post('/download-ts', [\Katcher\Controllers\DownloadTsController::class, 'downloadTs']);
 
-$router->get('/convert/{folder}', [KatcherController::class, 'showConvert']);
+$router->get('/convert/{folder}', [\Katcher\Controllers\ConvertController::class, 'show']);
 $router->post('/convert/{folder}', [KatcherController::class, 'convert']);
 
 $router->get('/download-mp4/{folder}', [KatcherController::class, 'showDownloadMp4']);
