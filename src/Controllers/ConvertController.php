@@ -41,7 +41,7 @@ class ConvertController extends AbstractController
         $viewData = $this->service->getShowViewData($args['folder']);
 
         $response->getBody()->write(
-            $this->getView('convert', $viewData)
+            $this->getView('convert/show', $viewData)
         );
 
         return $response;
