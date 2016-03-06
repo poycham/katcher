@@ -15,6 +15,11 @@ class ConvertController extends AbstractController
      */
     protected $service;
 
+    /**
+     * Instantiate ConvertController
+     *
+     * @param ConvertService $service
+     */
     public function __construct(ConvertService $service)
     {
         $this->service = $service;

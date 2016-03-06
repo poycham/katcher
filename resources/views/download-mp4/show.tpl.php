@@ -9,7 +9,7 @@
 </div>
 
 <?php $this->start('scripts') ?>
-    <script>
-        $('#download-form').submit();
-    </script>
+<script>
+    $('#download-form').submit();
+</script>
 <?php $this->stop() ?>

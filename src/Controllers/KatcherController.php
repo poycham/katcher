@@ -33,22 +33,7 @@ class KatcherController extends AbstractController
 
 
 
-    /**
-     * Show download page
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param array $args
-     * @return ResponseInterface
-     */
-    public function showDownloadMp4(ServerRequestInterface $request, ResponseInterface $response, array $args)
-    {
-        $response->getBody()->write(
-            $this->service->getView('download-mp4')
-        );
 
-        return $response;
-    }
 
     /**
      * Download mp4
