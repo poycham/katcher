@@ -31,20 +31,7 @@ class KatcherController extends AbstractController
 
 
 
-    /**
-     * Handle POST request to convert .ts files to .mp4
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param array $args
-     * @return RedirectResponse
-     */
-    public function convert(ServerRequestInterface $request, ResponseInterface $response, array $args)
-    {
-        $this->service->convertTsToMp4($args['folder']);
 
-        return new RedirectResponse('/download-mp4/' . $args['folder']);
-    }
 
     /**
      * Show download page
