@@ -149,4 +149,91 @@ class DownloadTsService extends AbstractService
 
         return $folder;
     }
+
+    /**
+     * @param string $folder
+     */
+    public function downloadMissingTs($folder)
+    {
+        $downloadStorage = new DownloadStorage($folder, $this->getFileSystem());
+        $metaLog = DownloadMetaLog::read($downloadStorage);
+        $missingFiles = $metaLog->get('missingFiles');
+
+        $metaLog
+            ->set('missingFiles', [])
+            ->set('oldMissingFiles', $missingFiles)
+            ->save();
+    }
+
+    /**
+     * Get filesystem
+     *
+     * @return \League\Flysystem\Filesystem
+     */
+    private function getFileSystem()
+    {
+        return $this->app->get('filesystem');
+    }
+
+    /**
+     * @param array $fileParts
+     * @param KatcherUrl $katcherURL
+     * @param DownloadStorage $downloadStorage
+     * @param DownloadMetaLog $metaLog
+     */
+    private function downloadFileParts(
+        array $fileParts,
+        KatcherUrl $katcherURL,
+        DownloadStorage $downloadStorage,
+        DownloadMetaLog $metaLog
+    ) {
+        $guzzle = new Client();
+        $filePartsCount = count($fileParts);
+
+        for ($i = 0; $i <= $filePartsCount; $i++) {
+            $curFilePart = $fileParts[$i];
+            $retries = 0;
+
+            $metaLog->set('currentFile', $curFilePart)->save();
+
+            while ($retries != KatcherDownload::RETRY_LIMIT) {
+                try {
+                    $response =  $guzzle->request('GET', $katcherURL->getFileURL($curFilePart), [
+                        'verify' => false,
+                        'timeout' => KatcherDownload::CONNECTION_TIMEOUT
+                    ]);
+                } catch (ClientException $e) {
+                    $metaLog->push('nonexistentFiles', $curFilePart)->save();
+
+                    /* download next file */
+                    continue 2;
+                } catch (RequestException $e) {
+                    $retries++;
+
+                    $metaLog->increment('downloadRetries')->save();
+
+                    /* handle reaching the retry limit */
+                    if ($retries == KatcherDownload::RETRY_LIMIT) {
+                        $metaLog->push('missingFiles', $curFilePart)->save();
+
+                        /* download next file */
+                        continue;
+                    }
+
+                    /* wait before retrying */
+                    sleep(KatcherDownload::RETRY_WAIT_SECS);
+                    continue;
+                }
+
+                /* save file */
+                $downloadStorage->writeFilePart(
+                    $katcherURL->getFileName($curFilePart),
+                    $response->getBody()->getContents()
+                );
+
+                /* download next file */
+                break;
+            }
+        }
+    }
 }

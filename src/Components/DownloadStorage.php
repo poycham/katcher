@@ -89,7 +89,7 @@ class DownloadStorage
      */
     public function writeFilePart($file, $contents)
     {
-        return $this->filesystem->write(
+        return $this->filesystem->put(
             $this->getRelativePath(static::FILES_PATH . '/' . $file),
             $contents
         );
