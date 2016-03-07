@@ -163,6 +163,13 @@ class DownloadTsService extends AbstractService
             ->set('missingFiles', [])
             ->set('oldMissingFiles', $missingFiles)
             ->save();
+
+        $this->downloadFileParts(
+            $missingFiles,
+            KatcherUrl::createFromUrl($metaLog->get('url')),
+            $downloadStorage,
+            $metaLog
+        );
     }
 
     /**
@@ -190,7 +197,7 @@ class DownloadTsService extends AbstractService
         $guzzle = new Client();
         $filePartsCount = count($fileParts);
 
-        for ($i = 0; $i <= $filePartsCount; $i++) {
+        for ($i = 0; $i < $filePartsCount; $i++) {
             $curFilePart = $fileParts[$i];
             $retries = 0;
 

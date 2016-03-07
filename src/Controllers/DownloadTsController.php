@@ -87,6 +87,8 @@ class DownloadTsController extends AbstractController
         ServerRequestInterface $request,
         ResponseInterface $response
     ) {
+        set_time_limit(0);
+
         $input = $request->getParsedBody();
 
         $this->service->downloadMissingTs($input['folder']);
