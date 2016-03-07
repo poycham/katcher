@@ -3,6 +3,7 @@
 /** @var \League\Route\RouteCollection $router */
 $router->get('/', [\Katcher\Controllers\DownloadTsController::class, 'index']);
 $router->post('/download-ts', [\Katcher\Controllers\DownloadTsController::class, 'downloadTs']);
+$router->post('/download-ts/missing', [\Katcher\Controllers\DownloadTsController::class, 'downloadMissingTs']);
 
 $router->get('/convert/{folder}', [\Katcher\Controllers\ConvertController::class, 'show']);
 $router->post('/convert/{folder}', [\Katcher\Controllers\ConvertController::class, 'convert']);

@@ -75,4 +75,20 @@ class DownloadTsController extends AbstractController
 
         return $this->getRedirectResponse('/convert/' . $folder);
     }
+
+    /**
+     * Handle post request to download files
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return RedirectResponse
+     */
+    public function downloadMissingTs(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ) {
+        $input = $request->getParsedBody();
+        var_dump($input);
+        exit;
+    }
 }

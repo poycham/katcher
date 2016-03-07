@@ -29,13 +29,13 @@ class ConvertService extends AbstractService
         if (! $isAllDownloaded) {
             if ($hasMissingFiles) {
                 $condViewData['missingFiles'] = $metaLog->get('missingFiles');
+                $condViewData['folder'] = $folder;
             }
 
             if ($hasNonexistentFiles) {
                 $condViewData['nonexistentFiles'] = $metaLog->get('nonexistentFiles');
             }
 
-            $condViewData['hasMissingFiles'] = $hasMissingFiles;
             $condViewData['hasNonexistentFiles'] = $hasNonexistentFiles;
             $condViewData['katcherURL'] = KatcherUrl::createFromUrl($metaLog->get('url'));
         }
@@ -44,7 +44,8 @@ class ConvertService extends AbstractService
 
         /* set view data */
         $viewData = array_merge(compact(
-            'isAllDownloaded'
+            'isAllDownloaded',
+            'hasMissingFiles'
         ), $condViewData);
 
         return $viewData;
