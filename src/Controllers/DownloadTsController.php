@@ -50,7 +50,7 @@ class DownloadTsController extends AbstractController
     }
 
     /**
-     * Handle post request to download files
+     * Handle post request to download .ts files
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
@@ -77,7 +77,7 @@ class DownloadTsController extends AbstractController
     }
 
     /**
-     * Handle post request to download files
+     * Handle post request to download missing .ts files
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
@@ -92,5 +92,7 @@ class DownloadTsController extends AbstractController
         $input = $request->getParsedBody();
 
         $this->service->downloadMissingTs($input['folder']);
+
+        return $this->getRedirectResponse('/convert/' . $input['folder']);
     }
 }

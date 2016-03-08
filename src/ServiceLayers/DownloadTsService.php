@@ -69,9 +69,8 @@ class DownloadTsService extends AbstractService
         /* delete duplicate directory */
         $data = $validator->getValidData();
         $katcherURL = KatcherUrl::createFromUrl($data['url']);
-        $filesystem = $this->app->get('filesystem');
+        $filesystem = $this->getFileSystem();
         $folder = $katcherURL->getBaseLastUri();
-
 
         if ($filesystem->has($folder)) {
             $filesystem->deleteDir($folder);
@@ -86,61 +85,21 @@ class DownloadTsService extends AbstractService
             'currentFile' => 0,
             'url' => $katcherURL->getFileURL('%i'),
             'parts' => [
-                'first' => $data['first_part'],
-                'last' => $data['last_part']
+                'first' => (int) $data['first_part'],
+                'last' => (int) $data['last_part']
             ],
             'missingFiles' => [],
             'nonexistentFiles' => [],
             'downloadRetries' => 0
         ], $downloadStorage);
 
-        /* download files */
-        $guzzle = new Client();
-
-        for ($i = $data['first_part']; $i <= $data['last_part']; $i++) {
-            $metaLog->set('currentFile', $i)->save();
-
-            $retries = 0;
-
-            while ($retries != KatcherDownload::RETRY_LIMIT) {
-                try {
-                    $response =  $guzzle->request('GET', $katcherURL->getFileURL($i), [
-                        'verify' => false,
-                        'timeout' => KatcherDownload::CONNECTION_TIMEOUT
-                    ]);
-                } catch (ClientException $e) {
-                    $metaLog->push('nonexistentFiles', (int) $i)->save();
-
-                    /* download next file */
-                    continue 2;
-                } catch (RequestException $e) {
-                    $metaLog->increment('downloadRetries')->save();
-
-                    $retries++;
-
-                    /* handle reaching the retry limit */
-                    if ($retries == KatcherDownload::RETRY_LIMIT) {
-                        $metaLog->push('missingFiles', (int) $i)->save();
-
-                        /* download next file */
-                        continue;
-                    }
-
-                    /* wait before retrying */
-                    sleep(KatcherDownload::RETRY_WAIT_SECS);
-                    continue;
-                }
-
-                /* save file */
-                $downloadStorage->writeFilePart(
-                    $katcherURL->getFileName($i),
-                    $response->getBody()->getContents()
-                );
-
-                /* download next file */
-                break;
-            }
-        }
+        /* download file parts */
+        $this->downloadFileParts(
+            range($data['first_part'], $data['last_part']),
+            $katcherURL,
+            $downloadStorage,
+            $metaLog
+        );
 
         /* update log */
         $metaLog->set('status', 'downloaded')
@@ -170,6 +129,8 @@ class DownloadTsService extends AbstractService
             $downloadStorage,
             $metaLog
         );
+
+        $metaLog->close();
     }
 
     /**
@@ -183,6 +144,8 @@ class DownloadTsService extends AbstractService
     }
 
     /**
+     * Download file parts
+     *
      * @param array $fileParts
      * @param KatcherUrl $katcherURL
      * @param DownloadStorage $downloadStorage
