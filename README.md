@@ -1,5 +1,5 @@
 # Katcher
-A PHP video downloader for [katch.me](https://katch.me/) which converts .ts file parts to a single .mp4 video
+A video downloader for [katch.me](https://katch.me/) which converts .ts file parts to a single .mp4 video
 
 ## Requirements
 * PHP 5.6+
