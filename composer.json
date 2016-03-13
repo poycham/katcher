@@ -1,10 +1,10 @@
 {
-    "name": "champoyradoo/katcher",
-    "description": "Video downloader for katch.me",
+    "name": "poycham/katcher",
+    "description": "A katch.me video downloader which converts .ts file parts to a single .mp4 video",
     "license": "MIT",
     "authors": [
         {
-            "name": "Champ Polestico",
+            "name": "Leoncio Cesar L. Polestico",
             "email": "champoyradoo@gmail.com"
         }
     ],

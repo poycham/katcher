@@ -1,14 +1,14 @@
 {
-  "name": "katcher",
+  "name": "poycham/katcher",
   "version": "1.0.0",
-  "description": "Downloader for katch.me",
+  "description": "A katch.me video downloader which converts .ts file parts to a single .mp4 video",
   "repository": {
     "type": "git",
-    "url": "git+https://champoyradoo@bitbucket.org/champoyradoo/katcher.git"
+    "url": "git+https://github.com/poycham/katcher.git"
   },
-  "author": "Leoncio Cesar Polestico",
+  "author": "Leoncio Cesar L. Polestico",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/champoyradoo/katcher#readme",
+  "homepage": "https://github.com/poycham/katcher#readme",
   "devDependencies": {
     "bootstrap-sass": "^3.3.6",
     "gulp": "^3.9.0",
