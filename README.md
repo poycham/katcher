@@ -22,7 +22,8 @@ e.g. https://katch.me/GeorgiaAquarium/v/6507be0c-5f1c-39dd-9751-4dfaeb71debd
 ##### Copy any .ts URL and paste it in the URL field
 One way to do this is to use Google Chrome Devtools (F12) to extract a .ts URL. Go to the network tab and copy the link of any .ts file. Sample link: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_1.ts
 
-[Extract Ts Image]
+[]
+![Extract Ts Image](https://raw.githubusercontent.com/poycham/katcher/master/common/img/extract-ts.png "Extract Ts Image")
 
 ##### Determine the number of the first and last file
 Just modify the number in the .ts URL you copied then visit it. Example to get the 75th file: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_75.ts .
