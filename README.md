@@ -1,5 +1,5 @@
 # Katcher
-A PHP video downloader for [katch.me](https://katch.me/) which converts .ts file parts to .mp4
+A PHP video downloader for [katch.me](https://katch.me/) which converts .ts file parts to a single .mp4 video
 
 ## Requirements
 * PHP 5.6+
@@ -13,21 +13,40 @@ A PHP video downloader for [katch.me](https://katch.me/) which converts .ts file
 * Run composer install
 
 ## Usage
+#### [Download Ts Files]
 ##### Run Katcher in your browser
+
 ##### Visit any katch.me video URL
-e.g. https://katch.me/NAThomestead/v/ec10b833-38d9-312a-a502-cc1371513d88
-##### Get any .ts URL
-One way this can be done is to use the Google Chrome Devtools (F12). Go to the network tab and copy the link of a .ts file.
-https://d152nid216lr13.cloudfront.net/ec10b833-38d9-312a-a502-cc1371513d88/chunk_0.ts
-##### Paste it in the URL field
+e.g. https://katch.me/GeorgiaAquarium/v/6507be0c-5f1c-39dd-9751-4dfaeb71debd
+
+##### Copy any .ts URL and paste it in the URL field
+One way to do this is to use Google Chrome Devtools (F12) to extract a .ts URL. Go to the network tab and copy the link of any .ts file. Sample link: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_1.ts
+
+[Extract Ts Image]
+
 ##### Determine the number of the first and last file
-Just modify the number in the .ts URL you copied. (e.g. 250 - for example https://d152nid216lr13.cloudfront.net/ec10b833-38d9-312a-a502-cc1371513d88/chunk_250.ts) For example you want to go to the 250th part just do this:
-If you are presented an access denied page, that is the indication that a file part does not exist. The last part is the last downloadable file. Make sure to test the next file parts if you have reached an access denied page. There is a tendency that other file parts are just skipped.
-#### Click the Download Button
+Just modify the number in the .ts URL you copied then visit it. Example to get the 75th file: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_75.ts .
 
-After all the .ts files are downloaded, you will be redirected to the convert page. From there, if everything is alright, just click the Convert button.
+A file exists if it is downloadable. If you are presented an access denied page, it means that a file part does not exist. Most of the time, the first part is 0, and the last part is the last downloadable file. Make sure to test the next file parts if you have reached an access denied page because maybe it's just a skipped part.
 
-Finally, you will be redirected to the download page where you can download the mp4 video.
+[Access Denied Image]
 
+##### Click the Download Button
 
+This may take some time.
 
+[Download Ts Image]
+
+#### [Convert]
+After downloading the ts files, you will be redirected to the convert page. Just click the Convert button.
+
+[Convert Image]
+
+#### [Download mp4]
+Finally, you will be redirected to the download page where your browser will automatically download the mp4 video.
+
+## Additional Notes
+#### Missing File Parts
+There are times when some files will not be downloaded due to internet connection problems. You will be prompted to re-download those files before you will be able to convert.
+
+[Redownload Image]
