@@ -7,8 +7,8 @@ A video downloader for [katch.me](https://katch.me/) which converts .ts file par
 * [FFmpeg](https://www.ffmpeg.org/download.html)
 
 ## Installation
-* Clone master in git
-* Make ffmpeg an executable in terminal
+* Clone repository
+* Make "ffmpeg" an executable command in terminal
 * Create an apache vhost and set the document root to /public
 * Run composer install
 
@@ -20,14 +20,20 @@ A video downloader for [katch.me](https://katch.me/) which converts .ts file par
 e.g. https://katch.me/GeorgiaAquarium/v/6507be0c-5f1c-39dd-9751-4dfaeb71debd
 
 ##### Copy any .ts URL and paste it in the URL field
-One way to do this is to use Google Chrome Devtools (F12) to extract a .ts URL. Go to the network tab and copy the link of any .ts file. Sample link: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_1.ts
+One way to do this is to use Google Chrome Devtools (F12) to extract a .ts URL. Go to the network tab and copy the link of any .ts file.
+
+e.g. https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_1.ts
+
+Note: If there is nothing shown in the network tab, just refresh the page with the tab opened.
 
 ![Extract Ts](https://raw.githubusercontent.com/poycham/katcher/master/common/img/extract-ts.png "Extract Ts")
 
 ##### Determine the number of the first and last file
-Just modify the number in the .ts URL you copied then visit it. Example to get the 75th file: https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_75.ts .
+Modify the number in the .ts URL you copied, then visit it.
 
-A file exists if it is downloadable. If you are presented an access denied page, it means that a file part does not exist. Most of the time, the first part is 0, and the last part is the last downloadable file. Make sure to test the next file parts if you have reached an access denied page because maybe it's just a skipped part.
+e.g. https://d152nid216lr13.cloudfront.net/6507be0c-5f1c-39dd-9751-4dfaeb71debd/chunk_75.ts (75th file)
+
+A file exists if you can download it. If you are presented an access denied page, that file part does not exist. Most of the time, the first part is 0, and the last part is the last downloadable file. Make sure to test the next file parts if you have reached an access denied page because maybe it's not the end.
 
 ![Access Denied](https://raw.githubusercontent.com/poycham/katcher/master/common/img/access-denied.png "Access Denied")
 
@@ -42,7 +48,7 @@ After downloading the ts files, you will be redirected to the convert page. Just
 
 ![Convert](https://raw.githubusercontent.com/poycham/katcher/master/common/img/convert.png "Convert")
 
-#### [Download mp4]
+#### [Download Mp4]
 Finally, you will be redirected to the download page where your browser will automatically download the mp4 video.
 
 ![Download](https://raw.githubusercontent.com/poycham/katcher/master/common/img/download.png "Download")
