@@ -14,7 +14,7 @@ class DownloadTsCest
     public function viewIndex(AcceptanceTester $I)
     {
         $I->amOnPage(\Page\DownloadTsPage::$URL);
-        $I->wantTo('vie Download Ts Page');
+        $I->wantTo('view Download Ts Page');
 
         $I->seeInTitle('Katcher - Download .ts Videos from katch.me');
     }

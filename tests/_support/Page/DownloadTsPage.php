@@ -13,6 +13,35 @@ class DownloadTsPage
      */
 
     /**
+     * @var \AcceptanceTester
+     */
+    protected $tester;
+
+    public function __construct(\AcceptanceTester $tester)
+    {
+        $this->tester = $tester;
+    }
+
+    /**
+     * Download Ts
+     *
+     * @param int $firstPart
+     * @param int $lastPart
+     * @return $this
+     */
+    public function downloadTs($firstPart = 0, $lastPart = 0)
+    {
+        $I = $this->tester;
+        $I->amOnPage(static::$URL);
+        $I->fillField('url', \Data\SampleKatcherUrl::URL);
+        $I->fillField('first_part', $firstPart);
+        $I->fillField('last_part', $lastPart);
+        $I->click('Download Files');
+
+        return $this;
+    }
+
+    /**
      * Basic route example for your current URL
      * You can append any additional parameter to URL
      * and use it in tests like: Page\Edit::route('/123-post');
@@ -21,6 +50,4 @@ class DownloadTsPage
     {
         return static::$URL.$param;
     }
-
-
 }
