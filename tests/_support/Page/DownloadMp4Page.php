@@ -1,10 +1,10 @@
 <?php
 namespace Page;
 
-class DownloadMp4Page
+class DownloadMp4Page extends AbstractFolderPage
 {
     // include url of current page
-    public static $URL = '~/download-mp4/([A-Za-z0-9\-]+)~';
+    public static $URL = '/download-mp4/{folder}';
 
     /**
      * Declare UI map for this page here. CSS or XPath allowed.
