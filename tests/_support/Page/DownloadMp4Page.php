@@ -7,6 +7,11 @@ class DownloadMp4Page extends AbstractFolderPage
     public static $URL = '/download-mp4/{folder}';
 
     /**
+     * @var string
+     */
+    public static $Title = 'Katcher - Download .mp4';
+
+    /**
      * Declare UI map for this page here. CSS or XPath allowed.
      * public static $usernameField = '#username';
      * public static $formSubmitButton = "#mainForm input[type=submit]";

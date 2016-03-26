@@ -17,7 +17,7 @@ class DownloadMp4Cest
     {
         $I->wantTo('view Download Mp4 Page');
 
-        $I->seeInTitle('Katcher - Download .mp4');
+        $I->seeInTitle(\Page\DownloadMp4Page::$Title);
     }
 
 //    public function downloadMp4(AcceptanceTester $I)
