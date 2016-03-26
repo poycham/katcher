@@ -3,9 +3,8 @@
 
 class ConvertCest
 {
-    public function _before(AcceptanceTester $I, \Page\DownloadTsPage $downloadTsPage)
+    public function _before(AcceptanceTester $I)
     {
-        $downloadTsPage->downloadTs();
     }
 
     public function _after(AcceptanceTester $I)
@@ -13,22 +12,19 @@ class ConvertCest
     }
 
     // tests
-    public function viewConvertPage(AcceptanceTester $I)
+    public function viewPage(AcceptanceTester $I, \Page\ConvertPage $convertPage)
     {
         $I->wantTo('view Convert Page');
 
-        $I->seeCurrentUrlEquals(\Page\ConvertPage::getUrl(\Data\SampleKatcherUrl::FOLDER));
-        $I->seeInTitle('Katcher - Convert to .mp4');
+        $convertPage->downloadTs();
+        $I->seeInTitle(\Page\ConvertPage::$Title);
     }
 
-    public function convert(AcceptanceTester $I)
+    public function convert(AcceptanceTester $I, \Page\ConvertPage $convertPage)
     {
-        $I->wantTo('Convert .ts files to .mp4');
+        $I->wantTo('convert .ts files to .mp4');
 
-        $I->see('All files were downloaded.', '.alert-success');
-        $I->click('button[type=submit]');
-
-        $I->seeCurrentUrlMatches(\Page\DownloadMp4Page::$URL);
+        $convertPage->convert();
         $I->seeFileFound(
             \Data\SampleKatcherUrl::FOLDER . '.mp4',
             'storage/' . \Data\SampleKatcherUrl::FOLDER

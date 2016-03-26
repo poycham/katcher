@@ -9,6 +9,11 @@ class ConvertPage extends AbstractFolderPage
     public static $URL = '/convert/{folder}';
 
     /**
+     * @var string
+     */
+    public static $Title = 'Katcher - Convert to .mp4';
+
+    /**
      * Declare UI map for this page here. CSS or XPath allowed.
      * public static $usernameField = '#username';
      * public static $formSubmitButton = "#mainForm input[type=submit]";
@@ -33,20 +38,27 @@ class ConvertPage extends AbstractFolderPage
         $this->downloadTsPage = $downloadTsPage;
     }
 
+    /**
+     * Download Ts
+     */
     public function downloadTs()
     {
         $this->downloadTsPage->downloadTs();
     }
 
+    /**
+     * Convert
+     *
+     * @return $this
+     */
     public function convert()
     {
         $I = $this->tester;
 
         $this->downloadTs();
-        $I->seeCurrentUrlEquals(static::getUrl(SampleKatcherUrl::FOLDER));
         $I->see('All files were downloaded.', '.alert-success');
 
-        $I->click('button[type=submit]');
+        $I->submitForm('form', []);
         $I->seeCurrentUrlEquals(DownloadMp4Page::getUrl(SampleKatcherUrl::FOLDER));
 
         return $this;
