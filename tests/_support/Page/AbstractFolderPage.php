@@ -9,7 +9,7 @@ abstract class AbstractFolderPage
     /**
      * Get convert URL
      *
-     * @param $folder
+     * @param string $folder
      * @return string
      */
     public static function getUrl($folder)

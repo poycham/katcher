@@ -3,7 +3,7 @@ namespace Page;
 
 use Data\SampleKatcherUrl;
 
-class ConvertPage
+class ConvertPage extends AbstractFolderPage
 {
     // include url of current page
     public static $URL = '/convert/{folder}';
@@ -60,16 +60,5 @@ class ConvertPage
     public static function route($param)
     {
         return static::$URL.$param;
-    }
-
-    /**
-     * Get convert URL
-     *
-     * @param $folder
-     * @return string
-     */
-    public static function getUrl($folder)
-    {
-        return str_replace('{folder}', $folder, static::$URL);
     }
 }

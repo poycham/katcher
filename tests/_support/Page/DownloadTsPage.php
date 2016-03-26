@@ -1,10 +1,13 @@
 <?php
 namespace Page;
 
+use Data\SampleKatcherUrl;
+
 class DownloadTsPage
 {
     // include url of current page
     public static $URL = '/';
+    public static $Title = 'Katcher - Download .ts Videos from katch.me';
 
     /**
      * Declare UI map for this page here. CSS or XPath allowed.
@@ -17,6 +20,11 @@ class DownloadTsPage
      */
     protected $tester;
 
+    /**
+     * Create DownloadTsPage
+     *
+     * @param \AcceptanceTester $tester
+     */
     public function __construct(\AcceptanceTester $tester)
     {
         $this->tester = $tester;
@@ -33,10 +41,14 @@ class DownloadTsPage
     {
         $I = $this->tester;
         $I->amOnPage(static::$URL);
-        $I->fillField('url', \Data\SampleKatcherUrl::URL);
-        $I->fillField('first_part', $firstPart);
-        $I->fillField('last_part', $lastPart);
-        $I->click('Download Files');
+
+        $I->submitForm('form', [
+            'url' => SampleKatcherUrl::URL,
+            'first_part' => $firstPart,
+            'last_part' => $lastPart
+        ]);
+        $I->seeCurrentUrlEquals(ConvertPage::getUrl(SampleKatcherUrl::FOLDER));
+
 
         return $this;
     }
