@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-5">
-        <form action="download-ts" method="POST">
+        <form action="/download-ts" method="POST">
             <?php if (count($errors) > 0) : ?>
                 <div class="alert alert-danger">
                     <h4>You have errors with your input!</h4>
