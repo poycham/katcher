@@ -1,5 +1,6 @@
 <?php
 
+use Page\ConvertPage;
 
 class ConvertCest
 {
