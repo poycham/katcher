@@ -25,7 +25,9 @@ class DownloadTsCest
         $I->wantTo('download TS files from Katcher');
 
         $downloadTsPage->downloadTs(0, 1);
-
+        $I->seeCurrentUrlEquals(
+            \Page\ConvertPage::getUrl(\Data\SampleKatcherUrl::FOLDER)
+        );
         $folder = 'storage/' . \Data\SampleKatcherUrl::FOLDER . '/files';
         $I->seeFileFound('chunk_0.ts', $folder);
         $I->seeFileFound('chunk_1.ts', $folder);

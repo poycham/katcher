@@ -44,6 +44,9 @@ class ConvertPage extends AbstractFolderPage
     public function downloadTs()
     {
         $this->downloadTsPage->downloadTs();
+        $this->tester->seeCurrentUrlEquals(
+           static::getUrl(\Data\SampleKatcherUrl::FOLDER)
+        );
     }
 
     /**
