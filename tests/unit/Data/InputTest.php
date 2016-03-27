@@ -4,15 +4,20 @@ namespace Data;
 use Codeception\Specify;
 use Katcher\Data\Input;
 
-class InputTest extends \PHPUnit_Framework_TestCase
+class InputTest extends \Codeception\TestCase\Test
 {
     use Specify;
 
-    protected function setUp()
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
+
+    protected function _before()
     {
     }
 
-    protected function tearDown()
+    protected function _after()
     {
     }
 
