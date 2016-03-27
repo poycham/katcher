@@ -47,8 +47,6 @@ class DownloadTsPage
             'first_part' => $firstPart,
             'last_part' => $lastPart
         ]);
-        $I->seeCurrentUrlEquals(ConvertPage::getUrl(SampleKatcherUrl::FOLDER));
-
 
         return $this;
     }
